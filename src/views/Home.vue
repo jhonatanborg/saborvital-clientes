@@ -122,6 +122,33 @@
         </v-col>
       </v-row>
     </v-img>
+    <v-img :src="bannerInfo" max-height="300px" class="px-8">
+      <v-row dense justify="start" align="center" class="px-6 fill-height">
+        <v-col cols="4">
+          <div class="regular">
+            <div>
+              <div class="subtitle-category">
+                <span>#PROMOCAOSABORVITAL</span>
+              </div>
+              <div class="title-category">
+                <span>Promoções</span>
+              </div>
+            </div>
+            <div class="details-promo text-left py-4">
+              <span
+                >Fique em casa: antes de abrir o app de delivery de comida,
+                escolha uma entre 30 sugestões de prato</span
+              >
+            </div>
+            <div>
+              <v-btn dark color="green darken-4" depressed
+                >Ver mais promoções</v-btn
+              >
+            </div>
+          </div>
+        </v-col>
+      </v-row>
+    </v-img>
 
     <v-dialog
       transition="dialog-transition"
@@ -232,6 +259,8 @@ export default {
   name: "Home",
   data() {
     return {
+      bannerInfo:
+        "https://images.pexels.com/photos/4033328/pexels-photo-4033328.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       banner: "https://i.imgur.com/9wkdGzO.png",
       main: "https://i.imgur.com/FhzGn2D.png",
       dialog: false,
