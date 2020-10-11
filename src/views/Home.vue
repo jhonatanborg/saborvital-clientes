@@ -88,7 +88,9 @@
               >
             </div>
             <div>
-              <v-btn color="success" depressed>Ver mais promoções</v-btn>
+              <v-btn color="white darken-4" outlined depressed
+                >Ver mais promoções</v-btn
+              >
             </div>
           </div>
         </v-col>
