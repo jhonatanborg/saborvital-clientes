@@ -10,12 +10,12 @@
       ></v-img>
       <v-spacer></v-spacer>
 
-      <v-btn small text>Home</v-btn>
-      <v-btn small text>Casa</v-btn>
-      <v-btn small text>Cardápio</v-btn>
+      <v-btn text>Home</v-btn>
+      <v-btn text>Casa</v-btn>
+      <v-btn :to="{ name: 'list-products' }" text>Cardápio</v-btn>
 
-      <v-btn dark color="black">Sacola</v-btn>
-      <v-btn small text>Login</v-btn>
+      <v-btn rounded dark color="black">Sacola</v-btn>
+      <v-btn text>Login</v-btn>
     </v-app-bar>
   </div>
 </template>
