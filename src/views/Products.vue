@@ -1,7 +1,7 @@
 <template>
   <div class="grey lighten-5">
     <ChefList />
-    <v-toolbar app class="fixed-bar" flat color="black lighten-3" dark>
+    <v-app-bar class="fixed-bar" flat color="teal accent-4" dark>
       <div class="mx-5">
         <v-btn small text v-for="n in 5" :key="n">
           <b>
@@ -9,9 +9,9 @@
           </b>
         </v-btn>
       </div>
-    </v-toolbar>
+    </v-app-bar>
     <v-container fluid>
-      <v-row>
+      <v-row class="px-8">
         <v-col cols="12">
           <div>
             <div class="subtitle-category">
@@ -33,7 +33,7 @@
           />
         </v-col>
       </v-row>
-      <v-row>
+      <v-row class="px-8 my-5">
         <v-col cols="12">
           <div>
             <div class="subtitle-category">
@@ -55,7 +55,7 @@
           />
         </v-col>
       </v-row>
-      <v-row>
+      <v-row class="px-8 my-5">
         <v-col cols="12">
           <div>
             <div class="subtitle-category">
@@ -78,16 +78,19 @@
         </v-col>
       </v-row>
     </v-container>
+    <DialogProduct />
   </div>
 </template>
 
 <script>
 import CardProduct from "@/components/product/CardProduct.vue";
 import ChefList from "@/components/product/ChefList.vue";
+import DialogProduct from "@/components/product/DialogProduct.vue";
 export default {
   components: {
     CardProduct,
     ChefList,
+    DialogProduct,
   },
 };
 </script>

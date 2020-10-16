@@ -2,7 +2,7 @@
   <div class="home grey lighten-5">
     <v-carousel
       cycle
-      height="400"
+      height="500"
       hide-delimiter-background
       show-arrows-on-hover
     >
@@ -43,7 +43,45 @@
     <div>
       <ChefList />
     </div>
-    <div></div>
+    <div class="my-5">
+      <v-row justify="center">
+        <v-img
+          src="@/assets/logo-banner.png"
+          max-height="300"
+          max-width="300"
+          contain
+        ></v-img
+      ></v-row>
+      <v-row justify="center" align="center">
+        <v-col cols="10" sm="6">
+          <div class="text-center details-banner">
+            <span
+              >O Sabor Vital se dedica a servir uma comida natural, fresca e
+              saudável, rica em nutrientes. O cardápio é preparado com amor,
+              simplicidade e um coração alegre.
+            </span>
+          </div>
+        </v-col>
+        <v-col cols="10">
+          <v-row justify="center">
+            <v-col cols="12" sm="2" v-for="n in 5" :key="n">
+              <v-card link>
+                <v-img
+                  src="https://images.pexels.com/photos/1438540/pexels-photo-1438540.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                  class="white--text align-end"
+                  gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                  height="200px"
+                >
+                  <div class="pa-5 details-banner font-weight-bold">
+                    <span>Pratos nutritivos e sustancias</span>
+                  </div>
+                </v-img>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </div>
 
     <v-img :src="bannerInfo" max-height="300px" class="px-8">
       <v-row dense justify="start" align="center" class="px-6 fill-height">
@@ -137,6 +175,7 @@ export default {
 }
 .details-banner {
   font-size: large;
+  font-family: "Roboto", cursive;
 }
 .title-category {
   font-size: large;
@@ -158,5 +197,9 @@ export default {
 }
 .details-promo {
   font-size: 15px;
+}
+.title-banner {
+  font-family: "Sansita Swashed", cursive;
+  font-size: 40px;
 }
 </style>

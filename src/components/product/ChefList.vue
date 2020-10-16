@@ -1,7 +1,7 @@
 <template>
   <v-img :src="banner" class="px-8  white--text ">
     <v-row dense justify="center" align="center" class="px-6 fill-height">
-      <v-col cols="4">
+      <v-col cols="12" sm="4">
         <div class="regular">
           <div>
             <div class="subtitle-category">
@@ -26,10 +26,10 @@
       </v-col>
       <v-col cols="8" class="">
         <v-row dense align="center" justify="center"
-          ><v-col v-for="n in 4" cols="3" :key="n">
+          ><v-col v-for="n in 4" cols="12" sm="3" :key="n">
             <v-card @click="dialog = true" link flat class="pa-5">
               <v-row align="center" no-gutters justify="center" class="">
-                <v-col cols="12"
+                <v-col cols="12" sm="12"
                   ><div class="display-2">
                     <v-img
                       aspect-ratio="1.1"

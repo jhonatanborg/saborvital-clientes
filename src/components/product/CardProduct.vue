@@ -1,5 +1,5 @@
 <template>
-  <v-card link flat raised>
+  <v-card link flat raised @click="openProduct()">
     <v-list-item three-line>
       <v-list-item-content>
         <v-list-item-title> Batata baroa refogada vegana</v-list-item-title>
@@ -20,6 +20,11 @@
 export default {
   props: {
     product: Object,
+  },
+  methods: {
+    openProduct() {
+      this.$store.commit("product/request", ["DialogProduct", true]);
+    },
   },
 };
 </script>
