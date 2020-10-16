@@ -2,10 +2,10 @@
   <v-dialog
     transition="dialog-transition"
     max-width="500px"
-    persistent
     scrollable
-    v-model="dialog"
     width="500"
+    @click:outside="close()"
+    :value="$store.state.product.DialogProduct"
     :fullscreen="$vuetify.breakpoint.xsOnly"
   >
     <v-card>
@@ -24,7 +24,13 @@
               fab
               @click="dialog = false"
             >
-              <v-icon size="20">mdi-close</v-icon>
+              <v-icon
+                size="20"
+                @click="
+                  $store.commit('product/request', ['DialogProduct', false])
+                "
+                >mdi-close</v-icon
+              >
             </v-btn>
           </v-col>
         </v-row>
@@ -87,10 +93,17 @@
             ></v-select
           ></v-col>
           <v-col cols="8" sm="8">
-            <v-btn dark type="submit" block x-large depressed color="#488e4b">
+            <v-btn
+              dark
+              type="submit"
+              block
+              x-large
+              depressed
+              color="teal accent-4"
+            >
               <div>
                 Confirmar
-                <span>
+                <span class="font-weight-bold">
                   R$ 15,00
                 </span>
               </div>
@@ -123,6 +136,11 @@ export default {
       itemQuantity: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       comment: null,
     };
+  },
+  methods: {
+    close() {
+      this.$store.commit("product/request", ["DialogProduct", false]);
+    },
   },
 };
 </script>
