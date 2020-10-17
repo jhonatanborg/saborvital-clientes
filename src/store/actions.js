@@ -25,35 +25,35 @@ const actions = {
     context.commit("loading", true, { root: true });
 
     axios.defaults.headers = null || {
-      Authorization: `Bearer ${localStorage.getItem("token")}`
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     };
 
     const config = {
       url: payload.url,
       method: payload.method,
       params: null || payload.params,
-      data: null || payload.data
+      data: null || payload.data,
     };
 
     const { msg } = message(payload.method);
     const resp = axios(config);
     resp
-      .then(response => {
+      .then((response) => {
         if (payload.state)
           context.commit("request", [payload.state, response.data]);
         context.commit("loading", false, { root: true });
         if (!payload.noMsg && payload.method !== "get")
           context.commit("message", [msg, "success"], { root: true });
       })
-      .catch(err => {
+      .catch((err) => {
         context.commit("loading", false, { root: true });
         context.commit("message", [err, "error"], {
-          root: true
+          root: true,
         });
       });
 
     return resp;
-  }
+  },
 };
 
 export default actions;

@@ -3,6 +3,7 @@
     <MenuBar />
     <Sale />
     <Login />
+    <MessageOrError />
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -13,6 +14,7 @@
 import MenuBar from "@/components/shared/MenuBar.vue";
 import Sale from "@/components/sale/Sale";
 import Login from "@/components/user/session/Session";
+import MessageOrError from "@/components/shared/MessageOrError";
 
 export default {
   name: "App",
@@ -21,6 +23,7 @@ export default {
     MenuBar,
     Sale,
     Login,
+    MessageOrError,
   },
 
   data: () => ({

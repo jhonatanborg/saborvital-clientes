@@ -6,6 +6,7 @@
     class="overflow-y-hidden"
     @input="eventSale"
     temporary
+    :class="step == 4 ? '#1e7073' : 'white'"
     clipped
     :width="$vuetify.breakpoint.xsOnly ? '100%' : '500px'"
     :value="$store.state.user.login.open"
@@ -27,14 +28,22 @@
     <v-row justify="center" align="center">
       <v-col cols="auto">
         <v-img
+          v-if="step !== 4"
           contain
-          width="100px"
+          width="150px"
           aspect-ratio="1.1"
-          src="@/assets/logo.png"
+          src="@/assets/logo-banner.png"
+        ></v-img>
+        <v-img
+          v-else
+          contain
+          width="150px"
+          aspect-ratio="1.1"
+          src="@/assets/logo-banner.png"
         ></v-img>
       </v-col>
     </v-row>
-    <v-row align="center" justify="center" class="px-5">
+    <v-row align="center" justify="center" class="px-5" v-if="step !== 4">
       <v-col cols="auto">
         <v-btn
           depressed
@@ -48,7 +57,7 @@
       <v-col cols="auto">
         <v-btn
           depressed
-          :dark="step == 2 ? true : false"
+          :dark="step == 2 || 3 ? true : false"
           rounded
           @click="step = 2"
           :color="step == 2 ? 'teal accent-4' : 'grey lighten-2'"
@@ -57,10 +66,29 @@
       </v-col>
     </v-row>
     <div class="d-flex justify-center  align-center">
-      <v-card flat max-width="400px" class="fill-height">
+      <v-card
+        flat
+        max-width="400px"
+        class="fill-height"
+        :color="step == 4 ? '#1e7073' : 'white'"
+      >
         <v-window v-model="step">
-          <v-window-item :value="1"> <Login /> </v-window-item>
-          <v-window-item :value="2"> <Register /> </v-window-item>
+          <v-window-item :value="1">
+            <Login @forgot-pass="step = 5" />
+          </v-window-item>
+          <v-window-item :value="2">
+            <Register @confirm="step = 3" />
+          </v-window-item>
+          <v-window-item :value="3">
+            <Confirm @success-code="step = 4" />
+          </v-window-item>
+          <v-window-item :value="4"> <SuccessRegister /> </v-window-item>
+          <v-window-item :value="5">
+            <ForgotPass @success-forgot="step = 6" />
+          </v-window-item>
+          <v-window-item :value="6">
+            <ConfirmForgot @success-forgot="step = 1" />
+          </v-window-item>
         </v-window>
       </v-card>
     </div>
@@ -79,11 +107,22 @@
 import ClickOutside from "vue-click-outside";
 import Login from "@/components/user/session/Login.vue";
 import Register from "@/components/user/session/Register.vue";
+import Confirm from "@/components/user/session/Confirm.vue";
+import SuccessRegister from "@/components/user/session/SuccessRegister.vue";
+import ForgotPass from "@/components/user/session/ForgotPass.vue";
+import ConfirmForgot from "@/components/user/session/ConfirmForgot.vue";
 export default {
   //   mixins: [Mixins],
-  components: { Login, Register },
+  components: {
+    Login,
+    Register,
+    Confirm,
+    SuccessRegister,
+    ForgotPass,
+    ConfirmForgot,
+  },
   data: () => ({
-    step: 1,
+    step: 4,
     dialogPay: false,
     purchase: [],
     cupomValidate: null,
@@ -95,9 +134,6 @@ export default {
   methods: {
     eventSale(event) {
       this.$store.commit("user/request", ["login", { open: event, step: 1 }]);
-    },
-    setRoute() {
-      // this.$router.push({ path: "/session" });
     },
   },
   directives: {

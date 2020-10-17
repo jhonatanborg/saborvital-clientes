@@ -6,6 +6,7 @@
           color="teal accent-4"
           outlined
           dense
+          v-model="user.name"
           label="Nome completo"
         ></v-text-field>
       </v-col>
@@ -14,6 +15,7 @@
           color="teal accent-4"
           outlined
           dense
+          v-model="user.email"
           label="E-mail"
         ></v-text-field>
       </v-col>
@@ -24,21 +26,75 @@
           label="Senha"
           append-icon="mdi-eye"
           outlined
+          v-model="user.password"
           color="teal accent-4"
         ></v-text-field>
-        <div class="my-3">
-          <span class="font-weight-bold grey--text ">Esqueci minha senha?</span>
-        </div>
       </v-col>
+      <v-alert type="error" dense :value="error"> {{ message }}</v-alert>
       <v-col cols="12">
-        <v-btn block x-large color="teal accent-4" dark>Cadastrar</v-btn>
+        <v-btn
+          @click="register()"
+          :loading="$store.state.loading"
+          block
+          x-large
+          color="teal accent-4"
+          dark
+          >Cadastrar</v-btn
+        >
       </v-col>
     </v-row>
   </v-row>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      user: {
+        name: null,
+        email: null,
+        password: null,
+      },
+      error: false,
+      message: null,
+    };
+  },
+  methods: {
+    checkForm() {
+      if (
+        this.user.name === null ||
+        this.user.email === null ||
+        this.user.password == null
+      ) {
+        this.error = true;
+        this.message = "Preencha todos os campos para criar o cadastro!";
+        return false;
+      } else {
+        return true;
+      }
+    },
+    register() {
+      if (this.checkForm()) {
+        this.$store
+          .dispatch("user/request", {
+            method: "POST",
+            url: "/client",
+            data: this.user,
+            noMsg: true,
+          })
+          .then(() => {
+            this.$emit("confirm");
+            localStorage.setItem("userRegister", JSON.stringify(this.user));
+          })
+          .catch(() => {
+            this.error = true;
+            this.message =
+              "Tivemos um erro ao cadastrar. Tente com um e-mail válido";
+          });
+      }
+    },
+  },
+};
 </script>
 
 <style></style>
