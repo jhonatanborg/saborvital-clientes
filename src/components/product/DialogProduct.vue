@@ -13,7 +13,11 @@
         width="100%"
         height="25%"
         aspect-ratio="1.1"
-        src="https://images.pexels.com/photos/264892/pexels-photo-264892.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+        :src="
+          productModal.image
+            ? $store.state.server + productModal.image
+            : 'https://www.atlantawatershed.org/wp-content/uploads/2017/06/default-placeholder-300x300.png'
+        "
       >
         <v-row justify="end">
           <v-col cols="auto">
@@ -37,37 +41,44 @@
       </v-img>
       <div>
         <div class="title-product pa-5">
-          <span>Batata baroa refogada vegana</span>
+          <span v-text="productModal.name"></span>
         </div>
-        <div class="grey pa-5 lighten-3 title-item-category">
-          <span> Adicione complementos </span>
+        <div class="subcategory-product px-5">
+          <span v-text="productModal.description"></span>
         </div>
       </div>
       <div class="overflow-x-hidden">
-        <v-list>
-          <v-list-item-group v-model="model" multiple>
-            <template v-for="(item, i) in items">
-              <v-list-item
-                :key="i"
-                :value="item"
-                active-class="green--text text--accent-4"
-              >
-                <template v-slot:default="{ active }">
-                  <v-list-item-content>
-                    <v-list-item-title v-text="item"></v-list-item-title>
-                  </v-list-item-content>
+        <div v-for="(item, i) in productModal.subcategories" :key="i">
+          <div class="grey pa-5 lighten-3 title-item-category">
+            <span v-text="item.name"> </span>
+          </div>
+          <v-list>
+            <v-list-item-group v-model="model" multiple>
+              <template v-for="(value, i) in item.complements">
+                <v-list-item
+                  :key="i"
+                  :value="value"
+                  active-class="green--text text--accent-4"
+                >
+                  <template v-slot:default="{ active }">
+                    <v-list-item-content>
+                      <v-list-item-title
+                        v-text="value.name"
+                      ></v-list-item-title>
+                    </v-list-item-content>
+                    <v-list-item-action>
+                      <v-checkbox
+                        :input-value="active"
+                        color="#488e4b"
+                      ></v-checkbox>
+                    </v-list-item-action>
+                  </template>
+                </v-list-item>
+              </template>
+            </v-list-item-group>
+          </v-list>
+        </div>
 
-                  <v-list-item-action>
-                    <v-checkbox
-                      :input-value="active"
-                      color="#488e4b"
-                    ></v-checkbox>
-                  </v-list-item-action>
-                </template>
-              </v-list-item>
-            </template>
-          </v-list-item-group>
-        </v-list>
         <div class="my-3 px-5">
           <v-textarea
             outlined
@@ -136,6 +147,11 @@ export default {
       itemQuantity: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       comment: null,
     };
+  },
+  computed: {
+    productModal() {
+      return this.$store.state.product.productModal || {};
+    },
   },
   methods: {
     close() {

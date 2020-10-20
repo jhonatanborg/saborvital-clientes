@@ -3,78 +3,22 @@
     <ChefList />
     <v-app-bar class="fixed-bar" flat color="teal accent-4" dark>
       <div class="mx-5">
-        <v-btn small text v-for="n in 5" :key="n">
-          <b>
-            Sugestões do chefe
-          </b>
+        <v-btn small text v-for="(item, i) in categories" :key="i">
+          <b v-text="item.name"> </b>
         </v-btn>
       </div>
     </v-app-bar>
     <v-container fluid>
-      <v-row class="px-8">
+      <v-row class="px-8" v-for="(item, i) in products" :key="i">
         <v-col cols="12">
           <div>
-            <div class="subtitle-category">
-              <span>#PROMOCAOSABORVITAL</span>
-            </div>
             <div class="title-category">
-              <span>Promoções</span>
+              <span v-text="item.name">Promoções</span>
             </div>
           </div>
         </v-col>
-        <v-col cols="4" v-for="n in 6" :key="n">
-          <CardProduct
-            :product="{
-              product: {
-                image:
-                  'https://images.pexels.com/photos/1639556/pexels-photo-1639556.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-              },
-            }"
-          />
-        </v-col>
-      </v-row>
-      <v-row class="px-8 my-5">
-        <v-col cols="12">
-          <div>
-            <div class="subtitle-category">
-              <span>#PROMOCAOSABORVITAL</span>
-            </div>
-            <div class="title-category">
-              <span>Promoções</span>
-            </div>
-          </div>
-        </v-col>
-        <v-col cols="12" sm="4" v-for="n in 5" :key="n">
-          <CardProduct
-            :product="{
-              product: {
-                image:
-                  'https://images.pexels.com/photos/248509/pexels-photo-248509.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-              },
-            }"
-          />
-        </v-col>
-      </v-row>
-      <v-row class="px-8 my-5">
-        <v-col cols="12">
-          <div>
-            <div class="subtitle-category">
-              <span>#PROMOCAOSABORVITAL</span>
-            </div>
-            <div class="title-category">
-              <span>Promoções</span>
-            </div>
-          </div>
-        </v-col>
-        <v-col cols="4" v-for="n in 5" :key="n">
-          <CardProduct
-            :product="{
-              product: {
-                image:
-                  'https://images.pexels.com/photos/406152/pexels-photo-406152.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-              },
-            }"
-          />
+        <v-col cols="4" v-for="(product, i) in item.products" :key="i">
+          <CardProduct :product="product" />
         </v-col>
       </v-row>
     </v-container>
@@ -91,6 +35,27 @@ export default {
     CardProduct,
     ChefList,
     DialogProduct,
+  },
+  mounted() {
+    this.getProducts();
+  },
+  computed: {
+    products() {
+      return this.$store.state.product.products;
+    },
+    categories() {
+      return this.$store.getters["product/getCategories"];
+    },
+  },
+  methods: {
+    getProducts() {
+      this.$store.dispatch("product/request", {
+        state: "products",
+        method: "GET",
+        url: "/product/",
+        noMsg: true,
+      });
+    },
   },
 };
 </script>
