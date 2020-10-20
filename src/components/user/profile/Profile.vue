@@ -6,7 +6,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
     </v-toolbar>
-    <v-row class="d-flex justify-space-between">
+    <v-row class="d-flex justify-space-between" v-if="user">
       <v-col cols="12" sm="12">
         <v-list three-line>
           <v-divider></v-divider>
@@ -25,44 +25,49 @@
           </v-list-item>
         </v-list>
       </v-col>
+      <v-col cols="12">
+        <v-btn color="error" @click="logout()" outlined>Encerrar sessão</v-btn>
+      </v-col>
     </v-row>
   </div>
 </template>
 
 <script>
 export default {
+  mounted() {
+    this.getUser();
+  },
   data: () => ({
-    user: {
-      name: "Jhonatan Borges",
-      email: "jhonatanborgesdj@gmail.com",
-    },
+    user: null,
   }),
   computed: {},
   methods: {
-    formatBirthday(date) {
-      if (date) {
-        return date
-          .substr(0, 10)
-          .split("-")
-          .reverse()
-          .join("/");
+    getUser() {
+      if (localStorage.getItem("token")) {
+        this.$store
+          .dispatch("user/request", {
+            method: "GET",
+            url: "/client/" + localStorage.getItem("user"),
+            noMsg: true,
+          })
+          .then((response) => {
+            console.log(response);
+            this.user = response.data;
+          })
+          .catch((error) => {
+            localStorage.clear();
+            location.reload();
+            console.log(error);
+          });
       }
+    },
+    logout() {
+      console.log("aqui");
+      localStorage.clear();
+      location.reload();
     },
   },
 };
 </script>
 
-<style>
-.subtitle-large {
-  font-size: 16px;
-}
-.price {
-  font-size: 16px;
-}
-.description-product {
-  font-size: 14px;
-}
-.edit-title {
-  font-size: 14px;
-}
-</style>
+<style></style>

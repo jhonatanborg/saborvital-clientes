@@ -8,6 +8,7 @@ const user = {
       open: false,
       step: 1,
     },
+    user: null,
   }),
 
   getters: {},

@@ -5,9 +5,23 @@ const product = {
   namespaced: true,
   state: () => ({
     DialogProduct: false,
+    products: [],
+    productModal: null,
   }),
 
-  getters: {},
+  getters: {
+    getCategories(state) {
+      let categories = [];
+      Object.values(state.products).forEach((value) => {
+        categories.push({
+          id: value.id,
+          name: value.name,
+        });
+      });
+      console.log(categories);
+      return categories;
+    },
+  },
   mutations: { ...mutationsGlobal },
   actions: { ...actionsGlobal },
 };
