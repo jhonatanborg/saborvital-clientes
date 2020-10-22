@@ -12,7 +12,17 @@ const sale = {
   },
   mutations: { ...mutationsGlobal },
 
-  getters: {},
+  getters: {
+    getSale(state) {
+      let products = [];
+      if (state.sale) {
+        state.sale.map((item) => {
+          products.push(item.item);
+        });
+      }
+      return products;
+    },
+  },
   actions: { ...actionsGlobal },
 };
 

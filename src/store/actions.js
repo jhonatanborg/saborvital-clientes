@@ -56,7 +56,6 @@ const actions = {
     return resp;
   },
   idb(context, payload) {
-    console.log(payload);
     if (payload.method === "getAll") {
       const idb = Idb.IndexedDB.indexedDBRequest("saledb", null, "getAll");
       idb.then((data) => {

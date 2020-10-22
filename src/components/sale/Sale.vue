@@ -53,10 +53,9 @@
                   class="my-0
                   "
                 >
-                  {{ item }}
                   <v-list-item-content>
                     <v-list-item-title>
-                      <b> {{ item.product_qtd }}</b>
+                      <b> {{ item.product_qtd }} X</b>
                       {{ item.product_name }}</v-list-item-title
                     >
                   </v-list-item-content>
@@ -171,7 +170,7 @@ export default {
   }),
   computed: {
     sale() {
-      return this.$store.state.sale.sale || [];
+      return this.$store.getters["sale/getSale"] || [];
     },
     subTotal() {
       let sum;
@@ -186,20 +185,22 @@ export default {
       this.$store.commit("sale/request", ["cart", { open: event, step: 1 }]);
     },
     deleteItemSale(item) {
-      const payload = {
-        idb: {
-          data: item,
-        },
-        method: "delete",
-      };
-      this.$store.dispatch("sale/idb", payload);
-      this.$store.dispatch("sale/idb", {
-        state: "sale",
-        method: "getAll",
-        idb: {
-          table: "saledb",
-        },
-      });
+      console.log(item);
+      // const payload = {
+      //   idb: {
+      //     table: "saledb",
+      //     data: item,
+      //   },
+      //   method: "delete",
+      // };
+      // this.$store.dispatch("sale/idb", payload);
+      // this.$store.dispatch("cart/idb", {
+      //   state: "sale",
+      //   method: "getAll",
+      //   idb: {
+      //     table: "saledb",
+      //   },
+      // });
     },
   },
   directives: {
