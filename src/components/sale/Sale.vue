@@ -45,23 +45,30 @@
                 <div class="py-3 grey lighten-4">
                   <span class="mx-3">Produtos</span>
                 </div>
-                <v-list-item dense link class="my-0">
+                <v-list-item
+                  v-for="(item, i) in sale"
+                  :key="i"
+                  dense
+                  link
+                  class="my-0
+                  "
+                >
+                  {{ item }}
                   <v-list-item-content>
-                    <div class=""></div>
                     <v-list-item-title>
-                      <b> 1x</b>
-                      Batata Premium</v-list-item-title
+                      <b> {{ item.product_qtd }}</b>
+                      {{ item.product_name }}</v-list-item-title
                     >
                   </v-list-item-content>
                   <v-list-item-action>
                     <div class="price-item">
                       <small>
-                        <b>R$ 30,00 </b>
+                        <b v-text="convertMoney(item.total)"></b>
                       </small>
                     </div>
                   </v-list-item-action>
                   <v-list-item-action>
-                    <v-btn icon color="error">
+                    <v-btn icon color="error" @click="deleteItemSale(item.id)">
                       <v-icon>mdi-close-circle-outline</v-icon>
                     </v-btn>
                   </v-list-item-action>
@@ -71,7 +78,12 @@
               <v-list-item class=" grey lighten-4">
                 <span class="pay-subtitle">Subtotal</span>
                 <v-spacer></v-spacer>
-                <div class="font-weight-bold black--text">R$4,00</div>
+                <div
+                  class="font-weight-bold black--text"
+                  v-text="convertMoney(subTotal)"
+                >
+                  R$4,00
+                </div>
               </v-list-item>
               <div class="col-sm-12">
                 <v-btn color="teal accent-4" x-large @click="step++" block dark
@@ -90,7 +102,7 @@
                       Subtotal
                     </v-list-item-subtitle>
                   </v-list-item-content>
-                  <div class="subtitle">R$ 40,00</div>
+                  <div class="subtitle" v-text="subTotal"></div>
                 </v-list-item>
                 <v-list-item dense>
                   <v-list-item-content>
@@ -141,11 +153,11 @@
 </template>
 
 <script>
-// import Mixins from "@/mixins/mixins.js";
+import Mixins from "@/mixins/mixins";
 import ClickOutside from "vue-click-outside";
 
 export default {
-  //   mixins: [Mixins],
+  mixins: [Mixins],
   components: {},
   data: () => ({
     step: 1,
@@ -157,9 +169,37 @@ export default {
     successCupom: null,
     loadingCupom: false,
   }),
+  computed: {
+    sale() {
+      return this.$store.state.sale.sale || [];
+    },
+    subTotal() {
+      let sum;
+      if (this.sale) {
+        sum = this.sale.reduce((sum, item) => sum + item.total, 0);
+      }
+      return sum;
+    },
+  },
   methods: {
     eventSale(event) {
       this.$store.commit("sale/request", ["cart", { open: event, step: 1 }]);
+    },
+    deleteItemSale(item) {
+      const payload = {
+        idb: {
+          data: item,
+        },
+        method: "delete",
+      };
+      this.$store.dispatch("sale/idb", payload);
+      this.$store.dispatch("sale/idb", {
+        state: "sale",
+        method: "getAll",
+        idb: {
+          table: "saledb",
+        },
+      });
     },
   },
   directives: {
@@ -183,7 +223,7 @@ a {
 }
 
 .barscroll::-webkit-scrollbar-thumb {
-  background: #ef354e;
+  background: #00bfa5;
   border: solid 3px #e6e6e6;
   border-radius: 7px;
 }

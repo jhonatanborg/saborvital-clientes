@@ -5,14 +5,13 @@ import product from "./modules/product";
 import sale from "./modules/sale";
 import utils from "./modules/utils";
 // import createPersistedState from "vuex-persistedstate";
-
+import idbActions from "./modules/dexieDb";
 import actionsGlobal from "./actions";
 import mutationsGlobal from "./mutations";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: { user, product, sale, utils },
-
   // plugins: [createPersistedState()],
   state: {
     exitModal: false,
@@ -26,6 +25,7 @@ export default new Vuex.Store({
     ...mutationsGlobal,
   },
   actions: {
+    ...idbActions,
     ...actionsGlobal,
   },
 });

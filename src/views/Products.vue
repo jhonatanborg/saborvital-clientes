@@ -3,24 +3,30 @@
     <ChefList />
     <v-app-bar class="fixed-bar" flat color="teal accent-4" dark>
       <div class="mx-5">
-        <v-btn small text v-for="(item, i) in categories" :key="i">
+        <v-btn
+          small
+          text
+          v-for="(item, i) in categories"
+          :key="i"
+          @click="filterScroll(item)"
+        >
           <b v-text="item.name"> </b>
         </v-btn>
       </div>
     </v-app-bar>
     <v-container fluid>
-      <v-row class="px-8" v-for="(item, i) in products" :key="i">
-        <v-col cols="12">
-          <div>
-            <div class="title-category">
-              <span v-text="item.name">Promoções</span>
-            </div>
+      <div v-for="(item, i) in products" :key="i" cols="12">
+        <div :id="'go' + item.id">
+          <div class="title-category " v-if="item.products.length > 0">
+            <span v-text="item.name"></span>
           </div>
-        </v-col>
-        <v-col cols="4" v-for="(product, i) in item.products" :key="i">
-          <CardProduct :product="product" />
-        </v-col>
-      </v-row>
+        </div>
+        <v-row>
+          <v-col cols="4" v-for="(product, i) in item.products" :key="i">
+            <CardProduct :product="product" />
+          </v-col>
+        </v-row>
+      </div>
     </v-container>
     <DialogProduct />
   </div>
@@ -56,6 +62,9 @@ export default {
         noMsg: true,
       });
     },
+    filterScroll(item) {
+      this.$vuetify.goTo((this.selector = "#go" + item.id), { offset: 80 });
+    },
   },
 };
 </script>
@@ -66,6 +75,12 @@ export default {
   position: -webkit-sticky; /* for Safari */
   top: 5em;
   z-index: 2;
-  background-color: khaki;
+}
+.fixed-category {
+  position: sticky;
+  position: -webkit-sticky; /* for Safari */
+  top: 5em;
+  z-index: 1;
+  padding-top: 100px;
 }
 </style>

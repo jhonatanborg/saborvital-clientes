@@ -1,5 +1,6 @@
 import axios from "axios";
-// import Idb from "./IndexedDb";
+import Idb from "@/plugins/indexDb.js";
+
 axios.defaults.baseURL = process.env.VUE_APP_BACKEND;
 
 function message(method) {
@@ -53,6 +54,27 @@ const actions = {
       });
 
     return resp;
+  },
+  idb(context, payload) {
+    console.log(payload);
+    if (payload.method === "getAll") {
+      const idb = Idb.IndexedDB.indexedDBRequest("saledb", null, "getAll");
+      idb.then((data) => {
+        context.commit("request", [payload.state, data]);
+      });
+    } else {
+      Idb.IndexedDB.indexedDBRequest(
+        "saledb",
+        payload.data,
+        payload.method
+      ).then(() => {
+        Idb.IndexedDB.indexedDBRequest("saledb", null, "getAll").then(
+          (data) => {
+            context.commit("request", [payload.state, data]);
+          }
+        );
+      });
+    }
   },
 };
 

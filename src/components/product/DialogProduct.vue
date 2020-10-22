@@ -8,7 +8,7 @@
     :value="$store.state.product.DialogProduct"
     :fullscreen="$vuetify.breakpoint.xsOnly"
   >
-    <v-card>
+    <v-card v-if="productModal">
       <v-img
         width="100%"
         height="25%"
@@ -47,29 +47,33 @@
           <span v-text="productModal.description"></span>
         </div>
       </div>
-      <div class="overflow-x-hidden">
+      <div class="overflow-x-hidden" v-if="productModal.subcategories">
         <div v-for="(item, i) in productModal.subcategories" :key="i">
           <div class="grey pa-5 lighten-3 title-item-category">
             <span v-text="item.name"> </span>
           </div>
           <v-list>
-            <v-list-item-group v-model="model" multiple>
+            <v-list-item-group v-model="complements" multiple>
               <template v-for="(value, i) in item.complements">
                 <v-list-item
                   :key="i"
                   :value="value"
                   active-class="green--text text--accent-4"
                 >
-                  <template v-slot:default="{ active }">
+                  <template v-slot:default="{ active, toggle }">
                     <v-list-item-content>
                       <v-list-item-title
                         v-text="value.name"
                       ></v-list-item-title>
+                      <v-list-item-subtitle class="font-weight-bold">
+                        + {{ convertMoney(value.value) }}
+                      </v-list-item-subtitle>
                     </v-list-item-content>
                     <v-list-item-action>
                       <v-checkbox
                         :input-value="active"
                         color="#488e4b"
+                        @click.stop="toggle"
                       ></v-checkbox>
                     </v-list-item-action>
                   </template>
@@ -92,7 +96,7 @@
         </div>
       </div>
 
-      <v-toolbar height="80px" bottom>
+      <v-toolbar max-height="80px" floating bottom>
         <v-row align="center">
           <v-col cols="4" sm="4">
             <v-select
@@ -108,14 +112,14 @@
               dark
               type="submit"
               block
+              @click="setSale"
               x-large
               depressed
               color="teal accent-4"
             >
               <div>
                 Confirmar
-                <span class="font-weight-bold">
-                  R$ 15,00
+                <span class="font-weight-bold" v-text="convertMoney(Total)">
                 </span>
               </div>
             </v-btn>
@@ -127,7 +131,11 @@
 </template>
 
 <script>
+import Mixins from "@/mixins/mixins.js";
+
 export default {
+  mixins: [Mixins],
+
   data() {
     return {
       main: "https://i.imgur.com/FhzGn2D.png",
@@ -146,16 +154,53 @@ export default {
       quantity: 1,
       itemQuantity: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       comment: null,
+      complements: [],
+      sale: null,
     };
   },
   computed: {
     productModal() {
-      return this.$store.state.product.productModal || {};
+      return this.$store.state.product.productModal || [];
+    },
+    Total() {
+      let total = 0;
+      if (this.complements.length > 0) {
+        this.complements.forEach((item) => {
+          total += item.value * parseFloat(this.quantity);
+        });
+      }
+      return (
+        parseFloat(total) +
+        parseFloat(this.productModal.value) * parseFloat(this.quantity)
+      );
     },
   },
   methods: {
     close() {
       this.$store.commit("product/request", ["DialogProduct", false]);
+    },
+    setSale() {
+      let childs = [];
+      if (this.complements.length > 0) {
+        this.complements.forEach((item) => {
+          childs.push({ complement_id: item.id });
+        });
+      }
+      let product = {
+        product_id: this.productModal.id,
+        product_qtd: this.quantity,
+        product_name: this.productModal.name,
+        total: parseFloat(this.Total),
+        childs: childs,
+        obs: this.comment,
+      };
+      this.$store.dispatch("sale/idb", {
+        state: "sale",
+        data: { item: product },
+        method: "post",
+      });
+      this.$store.commit("product/request", ["DialogProduct", false]);
+      this.sale = null;
     },
   },
 };

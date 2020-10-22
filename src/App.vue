@@ -18,7 +18,9 @@ import MessageOrError from "@/components/shared/MessageOrError";
 
 export default {
   name: "App",
-
+  mounted() {
+    this.getSaleIdb();
+  },
   components: {
     MenuBar,
     Sale,
@@ -29,6 +31,17 @@ export default {
   data: () => ({
     //
   }),
+  methods: {
+    getSaleIdb() {
+      this.$store.dispatch("sale/idb", {
+        state: "sale",
+        method: "getAll",
+        idb: {
+          table: "sale",
+        },
+      });
+    },
+  },
 };
 </script>
 <style>

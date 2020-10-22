@@ -18,7 +18,6 @@ const product = {
           name: value.name,
         });
       });
-      console.log(categories);
       return categories;
     },
   },

@@ -8,6 +8,7 @@ const sale = {
       open: false,
       step: 1,
     },
+    sale: null,
   },
   mutations: { ...mutationsGlobal },
 
