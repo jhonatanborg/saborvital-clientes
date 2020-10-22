@@ -51,18 +51,15 @@ export default {
             noMsg: true,
           })
           .then((response) => {
-            console.log(response);
             this.user = response.data;
           })
-          .catch((error) => {
+          .catch(() => {
             localStorage.clear();
             location.reload();
-            console.log(error);
           });
       }
     },
     logout() {
-      console.log("aqui");
       localStorage.clear();
       location.reload();
     },

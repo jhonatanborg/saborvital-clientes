@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar app height="80" fixed flat color="white">
+    <v-app-bar app height="80" flat color="white">
       <v-img
         class="mx-2"
         src="https://i.imgur.com/ShbPfQn.png"

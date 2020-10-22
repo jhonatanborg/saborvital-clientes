@@ -32,7 +32,6 @@ export default {
       this.$store.commit("user/request", ["login", { open: false, step: 1 }]);
       if (localStorage.getItem("userRegister")) {
         let user = JSON.parse(localStorage.getItem("userRegister"));
-        console.log(user);
         this.loading = true;
         this.$store
           .dispatch("user/request", {

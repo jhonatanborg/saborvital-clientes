@@ -8,10 +8,21 @@ const sale = {
       open: false,
       step: 1,
     },
+    sale: null,
   },
   mutations: { ...mutationsGlobal },
 
-  getters: {},
+  getters: {
+    getSale(state) {
+      let products = [];
+      if (state.sale) {
+        state.sale.map((item) => {
+          products.push(item.item);
+        });
+      }
+      return products;
+    },
+  },
   actions: { ...actionsGlobal },
 };
 

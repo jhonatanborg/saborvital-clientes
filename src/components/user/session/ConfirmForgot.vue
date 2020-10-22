@@ -49,7 +49,6 @@ export default {
   },
   methods: {
     confirmReset() {
-      console.log("aqui");
       this.$store
         .dispatch("user/request", {
           method: "POST",
