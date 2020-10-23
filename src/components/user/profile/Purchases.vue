@@ -1,36 +1,41 @@
 <template>
   <div>
-    <span class="title-list"> Meus pedidos</span>
-    <v-card
-      v-for="(item, key) in purchases"
-      :key="key"
-      :to="{ name: 'purchase-details', params: { id: item.id } }"
-      link
-      class="pa-5 my-5 card-purchase"
-      flat
-    >
-      <v-row justify="space-between" align="start">
-        <v-col cols="auto"
-          ><h4 class="number-purchase">Pedido {{ item.id }}</h4>
-          <span class="title-company">Açai no quintal</span>
-          <h4 class="value-purchase" v-text="convertMoney(item.total)"></h4>
-        </v-col>
-        <v-col cols="auto">
-          <h4 class="data-purchase" v-text="convertDate(item.date)"></h4>
-        </v-col>
-      </v-row>
-      <v-row justify="space-between">
-        <v-col cols="auto">
-          <v-chip
-            class="font-weight-bold"
-            :color="statuspurchase(item.status) + ' lighten-5'"
-            :text-color="statuspurchase(item.status)"
-            >{{ item.status }}</v-chip
-          >
-        </v-col>
-        <v-col cols="auto"> </v-col>
-      </v-row>
-    </v-card>
+    <div v-if="purchases.length > 0">
+      <span class="title-list"> Meus pedidos</span>
+      <v-card
+        v-for="(item, key) in purchases"
+        :key="key"
+        @click="goToPurchase(item)"
+        link
+        class="pa-5 my-5 card-purchase"
+        flat
+      >
+        <v-row justify="space-between" align="start">
+          <v-col cols="auto"
+            ><h4 class="number-purchase">Pedido {{ item.id }}</h4>
+            <span class="title-company">Sabor Vital</span>
+            <h4 class="value-purchase" v-text="item.total"></h4>
+          </v-col>
+          <v-col cols="auto">
+            <h4 class="data-purchase" v-text="item.created_at"></h4>
+          </v-col>
+        </v-row>
+        <v-row justify="space-between">
+          <v-col cols="auto">
+            <v-chip
+              class="font-weight-bold"
+              :color="statuspurchase(item.status) + ' lighten-5'"
+              :text-color="statuspurchase(item.status)"
+              >{{ item.status }}</v-chip
+            >
+          </v-col>
+          <v-col cols="auto"> </v-col>
+        </v-row>
+      </v-card>
+    </div>
+    <div v-else>
+      Você ainda não realizou nenhum pedido!
+    </div>
   </div>
 </template>
 
@@ -39,50 +44,31 @@ import Mixins from "@/mixins/mixins.js";
 
 export default {
   mixins: [Mixins],
-
-  data() {
-    return {
-      purchases: [
-        {
-          id: 5474,
-          total: 50.0,
-          date: "15/10/2020 13:48",
-          status: "Pendente",
-        },
-        {
-          id: 54154,
-          total: 50.0,
-          date: "15/10/2020 13:48",
-          status: "Confirmado",
-        },
-        {
-          id: 12331,
-          total: 50.0,
-          date: "15/10/2020 13:48",
-          status: "Pendente",
-        },
-        {
-          id: 3121,
-          total: 50.0,
-          date: "15/10/2020 13:48",
-          status: "Entregue",
-        },
-        {
-          id: 5343,
-          total: 50.0,
-          date: "15/10/2020 13:48",
-          status: "Cancelado",
-        },
-        {
-          id: 9889,
-          total: 50.0,
-          date: "15/10/2020 13:48",
-          status: "Finalizado",
-        },
-      ],
-    };
+  mounted() {
+    this.getAll();
   },
-  methods: {},
+  data() {
+    return {};
+  },
+  computed: {
+    purchases() {
+      return this.$store.state.sale.sales;
+    },
+  },
+  methods: {
+    goToPurchase(purchase) {
+      this.$store.commit("sale/request", ["purchaseDetails", purchase]);
+      this.$router.push("pedidos-detalhes/" + purchase.id).catch(() => {});
+    },
+    getAll() {
+      this.$store.dispatch("sale/request", {
+        state: "myPurchases",
+        method: "GET",
+        url: "/sale-client",
+        noMsg: true,
+      });
+    },
+  },
 };
 </script>
 

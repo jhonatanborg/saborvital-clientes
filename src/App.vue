@@ -20,6 +20,7 @@ export default {
   name: "App",
   mounted() {
     this.getSaleIdb();
+    this.getProducts();
   },
   components: {
     MenuBar,
@@ -37,8 +38,16 @@ export default {
         state: "sale",
         method: "getAll",
         idb: {
-          table: "sale",
+          table: "saledb",
         },
+      });
+    },
+    getProducts() {
+      this.$store.dispatch("product/request", {
+        state: "products",
+        method: "GET",
+        url: "/product/",
+        noMsg: true,
       });
     },
   },

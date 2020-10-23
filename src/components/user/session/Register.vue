@@ -24,8 +24,10 @@
           dense
           hide-details=""
           label="Senha"
-          append-icon="mdi-eye"
           outlined
+          :type="show ? 'text' : 'password'"
+          :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+          @click:append="show = !show"
           v-model="user.password"
           color="teal accent-4"
         ></v-text-field>
@@ -57,6 +59,7 @@ export default {
       },
       error: false,
       message: null,
+      show: false,
     };
   },
   methods: {

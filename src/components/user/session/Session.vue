@@ -6,7 +6,7 @@
     class="overflow-y-hidden"
     @input="eventSale"
     temporary
-    :class="step == 4 ? '#1e7073' : 'white'"
+    :class="step == 4 ? 'teal accent-4' : 'white'"
     clipped
     :width="$vuetify.breakpoint.xsOnly ? '100%' : '500px'"
     :value="$store.state.user.login.open"
@@ -70,7 +70,7 @@
         flat
         max-width="400px"
         class="fill-height"
-        :color="step == 4 ? '#1e7073' : 'white'"
+        :color="step == 4 ? 'teal accent-4' : 'white'"
       >
         <v-window v-model="step">
           <v-window-item :value="1">
@@ -122,7 +122,7 @@ export default {
     ConfirmForgot,
   },
   data: () => ({
-    step: 4,
+    step: 1,
     dialogPay: false,
     purchase: [],
     cupomValidate: null,

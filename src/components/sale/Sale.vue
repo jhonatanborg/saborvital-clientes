@@ -13,136 +13,29 @@
       <div class="align-center">
         <v-list-item class="mx-0">
           <v-list-item-content>
-            <span class="title-cart">SUA SACOLA</span>
+            <span class="title-cart">Seu carrinho</span>
           </v-list-item-content>
           <v-list-item-action>
-            <v-btn outlined color="error">Fechar</v-btn>
+            <v-btn @click="eventSale(false)" outlined color="error"
+              >Fechar</v-btn
+            >
           </v-list-item-action>
         </v-list-item>
       </div>
       <div>
         <div id="list-products">
           <v-window v-model="step">
-            <v-window-item :value="1">
-              <div class="py-2 grey lighten-4">
-                <span class="mx-3">Entregar em:</span>
-              </div>
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-subtitle>
-                    Rua amendoeiras, 1976 - Cidade Nova
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-                <v-btn small icon color="#765eda">
-                  <v-icon size="20">mdi-pencil-outline</v-icon>
-                </v-btn>
-              </v-list-item>
-              <v-card
-                class="overflow-y-auto barscroll "
-                style="max-height: 320px;"
-                flat
-              >
-                <div class="py-3 grey lighten-4">
-                  <span class="mx-3">Produtos</span>
-                </div>
-                <v-list-item
-                  v-for="(item, i) in sale"
-                  :key="i"
-                  dense
-                  link
-                  class="my-0
-                  "
-                >
-                  <v-list-item-content>
-                    <v-list-item-title>
-                      <b> {{ item.product_qtd }} X</b>
-                      {{ item.product_name }}</v-list-item-title
-                    >
-                  </v-list-item-content>
-                  <v-list-item-action>
-                    <div class="price-item">
-                      <small>
-                        <b v-text="convertMoney(item.total)"></b>
-                      </small>
-                    </div>
-                  </v-list-item-action>
-                  <v-list-item-action>
-                    <v-btn icon color="error" @click="deleteItemSale(item.id)">
-                      <v-icon>mdi-close-circle-outline</v-icon>
-                    </v-btn>
-                  </v-list-item-action>
-                </v-list-item>
-              </v-card>
-
-              <v-list-item class=" grey lighten-4">
-                <span class="pay-subtitle">Subtotal</span>
-                <v-spacer></v-spacer>
-                <div
-                  class="font-weight-bold black--text"
-                  v-text="convertMoney(subTotal)"
-                >
-                  R$4,00
-                </div>
-              </v-list-item>
-              <div class="col-sm-12">
-                <v-btn color="teal accent-4" x-large @click="step++" block dark
-                  >Confirmar</v-btn
-                >
-              </div>
-            </v-window-item>
+            <v-window-item :value="1"
+              ><SaleFirst @next="stepSelector(2)"
+            /></v-window-item>
             <v-window-item :value="2">
-              <v-card flat>
-                <div class="py-2 grey lighten-4">
-                  <span class="mx-3">Resumo</span>
-                </div>
-                <v-list-item dense>
-                  <v-list-item-content>
-                    <v-list-item-subtitle>
-                      Subtotal
-                    </v-list-item-subtitle>
-                  </v-list-item-content>
-                  <div class="subtitle" v-text="subTotal"></div>
-                </v-list-item>
-                <v-list-item dense>
-                  <v-list-item-content>
-                    <v-list-item-subtitle>
-                      Taxa de entrega
-                    </v-list-item-subtitle>
-                  </v-list-item-content>
-                  <div class="subtitle">R$30,00</div>
-                </v-list-item>
-                <v-list-item dense>
-                  <v-list-item-content>
-                    <v-list-item-subtitle>
-                      Total
-                    </v-list-item-subtitle>
-                  </v-list-item-content>
-                  <div class="subtitle">R$60,00</div>
-                </v-list-item>
-                <div>
-                  <div class="py-2 grey lighten-4">
-                    <span class="mx-3">Tipo de pagamento</span>
-                  </div>
-                  <div>
-                    <div class="mx-3 my-3">
-                      <v-btn dense outlined color="teal accent-4" dark block>
-                        Seleciona a forma de pagamento
-                      </v-btn>
-                    </div>
-
-                    <div class="mx-3 ">
-                      <v-btn
-                        color="teal accent-4"
-                        large
-                        block
-                        class="white--text"
-                      >
-                        Confirmar Pedido
-                      </v-btn>
-                    </div>
-                  </div>
-                </div>
-              </v-card>
+              <SaleAddress @next="stepSelector(3)" />
+            </v-window-item>
+            <v-window-item :value="3">
+              <PaySelect />
+            </v-window-item>
+            <v-window-item :value="4">
+              <SaleEmpty />
             </v-window-item>
           </v-window>
         </div>
@@ -154,12 +47,20 @@
 <script>
 import Mixins from "@/mixins/mixins";
 import ClickOutside from "vue-click-outside";
-
+import SaleFirst from "@/components/sale/SaleIntro.vue";
+import SaleAddress from "@/components/sale/SaleAddress.vue";
+import PaySelect from "@/components/sale/SalePaySelect.vue";
+import SaleEmpty from "@/components/sale/SaleEmpty.vue";
 export default {
   mixins: [Mixins],
-  components: {},
+  components: {
+    SaleFirst,
+    SaleAddress,
+    PaySelect,
+    SaleEmpty,
+  },
+
   data: () => ({
-    step: 1,
     dialogPay: false,
     purchase: [],
     cupomValidate: null,
@@ -170,37 +71,23 @@ export default {
   }),
   computed: {
     sale() {
-      return this.$store.getters["sale/getSale"] || [];
+      return this.$store.state.sale.sale;
     },
-    subTotal() {
-      let sum;
-      if (this.sale) {
-        sum = this.sale.reduce((sum, item) => sum + item.total, 0);
-      }
-      return sum;
+    step: {
+      set() {},
+      get() {
+        return this.$store.state.sale.cart.step;
+      },
     },
   },
   methods: {
     eventSale(event) {
-      this.$store.commit("sale/request", ["cart", { open: event, step: 1 }]);
+      if (!event) {
+        this.$store.commit("sale/request", ["cart", { open: event, step: 1 }]);
+      }
     },
-    deleteItemSale(item) {
-      console.log(item);
-      // const payload = {
-      //   idb: {
-      //     table: "saledb",
-      //     data: item,
-      //   },
-      //   method: "delete",
-      // };
-      // this.$store.dispatch("sale/idb", payload);
-      // this.$store.dispatch("cart/idb", {
-      //   state: "sale",
-      //   method: "getAll",
-      //   idb: {
-      //     table: "saledb",
-      //   },
-      // });
+    stepSelector(value) {
+      this.$store.commit("sale/request", ["cart", { open: true, step: value }]);
     },
   },
   directives: {

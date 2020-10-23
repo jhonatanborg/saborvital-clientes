@@ -1,18 +1,23 @@
 <template>
-  <div id="purchase-details">
+  <div id="purchase-details" v-if="purchase.id">
     <div class="d-flex justify-end">
       <v-btn color="error" :to="{ name: 'purchases' }" outlined>Voltar</v-btn>
     </div>
     <v-card flat class="my-5">
-      <v-alert class="ma-0" type="success"
-        ><span class="white--text font-weight-bold"
-          >Entregue com sucesso</span
-        ></v-alert
+      <v-alert
+        :color="statuspurchase(purchase.status)"
+        :text-color="statuspurchase(purchase.status)"
+        class="ma-0"
+        type="success"
       >
+        <span class="white--text font-weight-bold">
+          {{ purchase.status }}
+        </span>
+      </v-alert>
       <div class="px-3">
         <v-row justify="space-between">
-          <v-col cols="auto">Pedido {{ purchases.id }}</v-col>
-          <v-col cols="auto">Hoje 11:45</v-col>
+          <v-col cols="auto">Pedido {{ purchase.id }}</v-col>
+          <v-col cols="auto">{{ purchase.created_at }}</v-col>
         </v-row>
       </div>
       <div class="px-3">
@@ -23,19 +28,19 @@
       <v-list>
         <div>
           <v-list-item
-            v-for="(item, key) in purchases.itens"
+            v-for="(item, key) in purchase.items"
             :key="key"
             class="px-3"
           >
             <v-list-item-content>
               <v-list-item-title
                 ><span v-text="item.product_qtd + 'X '"></span>
-                <span v-text="item.product_name"></span>
+                <span v-text="item.product.name"></span>
               </v-list-item-title>
             </v-list-item-content>
             <v-list-item-action
               class="value-product"
-              v-text="convertMoney(item.product_sale_value)"
+              v-text="convertMoney(item.product.value)"
             ></v-list-item-action>
           </v-list-item>
           <v-divider class="px-3"></v-divider>
@@ -47,7 +52,7 @@
             <v-list-item-title>Subtotal</v-list-item-title>
           </v-list-item-content>
           <v-list-item-action
-            v-text="convertMoney(purchases.subtotal)"
+            v-text="convertMoney(purchase.subtotal)"
             class="value-product"
           ></v-list-item-action>
         </v-list-item>
@@ -56,7 +61,7 @@
             <v-list-item-title>Taxa de entrega</v-list-item-title>
           </v-list-item-content>
           <v-list-item-action
-            v-text="convertMoney(purchases.delivery_value)"
+            v-text="convertMoney(purchase.delivery_value)"
             class="value-product"
           ></v-list-item-action>
         </v-list-item>
@@ -65,30 +70,35 @@
             <v-list-item-title>Total</v-list-item-title>
           </v-list-item-content>
           <v-list-item-action
-            v-text="convertMoney(purchases.total)"
+            v-text="convertMoney(purchase.total)"
             class="value-product"
           ></v-list-item-action>
         </v-list-item>
         <div class="px-4 grey lighten-5">
           <v-row justify="space-between">
             <v-col cols="auto">Forma de pagamento</v-col>
-            <v-col cols="auto">Cartão de crédito</v-col>
+            <v-col
+              cols="auto"
+              v-for="(pay, p) in purchase.payment.match(
+                /[a-zA-Z\u00C0-\u00FF ]+/g
+              )"
+              :key="p"
+            >
+              {{ pay }}
+            </v-col>
           </v-row>
         </div>
-        <div v-if="purchases.deliveryAddress" class="px-4 purchase-address">
+        <div class="px-4 purchase-address">
           <div>
             <span>Entregar em:</span>
           </div>
           <div>
-            <span v-text="purchases.deliveryAddress.title">Casa</span>
-          </div>
-          <div>
             <span>
-              {{ purchases.deliveryAddress.street }},
-              {{ purchases.deliveryAddress.number }}
+              {{ purchase.address.street }},
+              {{ purchase.address.number }}
               <span
-                v-if="purchases.deliveryAddress.complement"
-                v-text="', ' + purchases.deliveryAddress.complement"
+                v-if="purchase.address.complement"
+                v-text="', ' + purchase.address.complement"
               ></span>
             </span>
           </div>
@@ -104,34 +114,26 @@ import Mixins from "@/mixins/mixins.js";
 export default {
   mixins: [Mixins],
 
-  data() {
-    return {
-      purchases: {
-        id: 120,
-        delivery_value: 5.0,
-        total: 150.0,
-        deliveryAddress: {
-          street: "Amendoeiras",
-          number: 49,
-          complement: "Ao lado do posto",
-          district: "Cidade Alta",
-        },
-        itens: [
-          {
-            id: 51,
-            product_qtd: 1,
-            product_name: "Batata Recheado",
-            product_sale_value: 30.5,
-          },
-          {
-            id: 52,
-            product_qtd: 2,
-            product_name: "Coca - lata",
-            product_sale_value: 20.5,
-          },
-        ],
-      },
-    };
+  mounted() {
+    setInterval(() => {
+      this.getDetails();
+    }, 15000);
+    this.getDetails();
+  },
+  computed: {
+    purchase() {
+      return this.$store.state.sale.purchaseDetails || {};
+    },
+  },
+  methods: {
+    getDetails() {
+      this.$store.dispatch("sale/request", {
+        state: "purchaseDetails",
+        method: "GET",
+        url: "/sale-client/" + this.$route.params.id,
+        noMsg: true,
+      });
+    },
   },
 };
 </script>

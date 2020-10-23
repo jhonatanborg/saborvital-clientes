@@ -6,9 +6,14 @@ const sale = {
   state: {
     cart: {
       open: false,
-      step: 1,
+      step: null,
     },
     sale: null,
+    sales: [],
+    myPurchases: [],
+    purchaseDetails: null,
+    districts: null,
+    addressDelivery: null,
   },
   mutations: { ...mutationsGlobal },
 
