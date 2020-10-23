@@ -5,9 +5,9 @@
         v-ripple
         @click="goHome"
         class="mx-2 click-logo"
-        src="https://i.imgur.com/ShbPfQn.png"
-        max-height="100"
-        max-width="100"
+        src="@/assets/logo-banner.png"
+        max-height="150"
+        max-width="150"
         contain
       ></v-img>
       <v-spacer></v-spacer>
@@ -28,7 +28,7 @@
         dark
         @click="openSale()"
         class="text-capitalize"
-        ><b>Sacola</b>
+        ><b>Carrinho</b>
         <v-chip
           class="ml-3 text-capitalize"
           color="white"
