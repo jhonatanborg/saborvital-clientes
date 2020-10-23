@@ -42,9 +42,7 @@ export default {
     ChefList,
     DialogProduct,
   },
-  mounted() {
-    this.getProducts();
-  },
+
   computed: {
     products() {
       return this.$store.state.product.products;
@@ -54,14 +52,6 @@ export default {
     },
   },
   methods: {
-    getProducts() {
-      this.$store.dispatch("product/request", {
-        state: "products",
-        method: "GET",
-        url: "/product/",
-        noMsg: true,
-      });
-    },
     filterScroll(item) {
       this.$vuetify.goTo((this.selector = "#go" + item.id), { offset: 80 });
     },

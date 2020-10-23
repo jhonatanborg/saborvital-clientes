@@ -56,8 +56,9 @@ const actions = {
     return resp;
   },
   idb(context, payload) {
+    let idb;
     if (payload.method === "getAll") {
-      const idb = Idb.IndexedDB.indexedDBRequest("saledb", null, "getAll");
+      idb = Idb.IndexedDB.indexedDBRequest("saledb", null, "getAll");
       idb.then((data) => {
         context.commit("request", [payload.state, data]);
       });
@@ -74,6 +75,7 @@ const actions = {
         );
       });
     }
+    return idb;
   },
 };
 

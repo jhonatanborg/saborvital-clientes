@@ -13,12 +13,26 @@ const product = {
     getCategories(state) {
       let categories = [];
       Object.values(state.products).forEach((value) => {
-        categories.push({
-          id: value.id,
-          name: value.name,
-        });
+        if (value.products.length > 0)
+          categories.push({
+            id: value.id,
+            name: value.name,
+          });
       });
       return categories;
+    },
+    getSuggesteds(state) {
+      const suggesteds = [];
+      // suggested
+      if (state.products.length > 0) {
+        console.log("asdasd");
+        state.products.forEach((c) => {
+          c.products.forEach((p) => {
+            if (p.suggested === "y") suggesteds.push(p);
+          });
+        });
+      }
+      return suggesteds;
     },
   },
   mutations: { ...mutationsGlobal },

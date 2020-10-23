@@ -4,7 +4,7 @@
     max-width="500px"
     scrollable
     width="500"
-    @click:outside="close()"
+    @click:outside="close"
     :value="$store.state.product.DialogProduct"
     :fullscreen="$vuetify.breakpoint.xsOnly"
   >
@@ -21,20 +21,8 @@
       >
         <v-row justify="end">
           <v-col cols="auto">
-            <v-btn
-              class="mr-3"
-              x-small
-              color="white"
-              fab
-              @click="dialog = false"
-            >
-              <v-icon
-                size="20"
-                @click="
-                  $store.commit('product/request', ['DialogProduct', false])
-                "
-                >mdi-close</v-icon
-              >
+            <v-btn class="mr-3" x-small color="white" fab @click="close">
+              <v-icon size="20">mdi-close</v-icon>
             </v-btn>
           </v-col>
         </v-row>
@@ -196,7 +184,7 @@ export default {
       };
       this.$store.dispatch("sale/idb", {
         state: "sale",
-        data: { item: product },
+        data: product,
         method: "post",
       });
       this.$store.commit("product/request", ["DialogProduct", false]);

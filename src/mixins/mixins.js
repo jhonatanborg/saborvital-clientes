@@ -15,23 +15,20 @@ export default {
     statuspurchase(status) {
       let statusColor;
       switch (status) {
-        case "Pendente":
+        case "pendente":
           statusColor = "warning";
           break;
-        case "Confirmado":
+        case "confirmado":
           statusColor = "purple";
           break;
-        case "Saiu para Entrega":
+        case "despachado":
           statusColor = "primary";
           break;
-        case "Entregue":
+        case "entregue":
           statusColor = "green";
           break;
-        case "Cancelado":
+        case "cancelado":
           statusColor = "red";
-          break;
-        case "Finalizado":
-          statusColor = "light-green";
           break;
         default:
           break;

@@ -2,7 +2,9 @@
   <div>
     <v-app-bar app height="80" flat color="white">
       <v-img
-        class="mx-2"
+        v-ripple
+        @click="goHome"
+        class="mx-2 click-logo"
         src="https://i.imgur.com/ShbPfQn.png"
         max-height="100"
         max-width="100"
@@ -24,9 +26,7 @@
         rounded
         color="teal accent-4"
         dark
-        @click="
-          $store.commit('sale/request', ['cart', { open: true, step: 1 }])
-        "
+        @click="openSale()"
         class="text-capitalize"
         ><b>Sacola</b>
         <v-chip
@@ -34,8 +34,9 @@
           color="white"
           text-color="teal"
           small
-          >0</v-chip
         >
+          {{ sale.length }}
+        </v-chip>
       </v-btn>
       <div v-if="verifySession">
         <v-btn :to="{ name: 'account' }" text class="text-capitalize" rounded
@@ -47,7 +48,7 @@
       </div>
       <div v-if="!verifySession">
         <v-btn text class="text-capitalize" rounded @click="loginModal()"
-          >Login</v-btn
+          >Iniciar sessão</v-btn
         >
       </div>
     </v-app-bar>
@@ -63,13 +64,30 @@ export default {
       }
       return false;
     },
+    sale() {
+      return this.$store.state.sale.sale || [];
+    },
   },
   methods: {
+    goHome() {
+      this.$router.push("/").catch(() => {});
+    },
     loginModal() {
       this.$store.commit("user/request", ["login", { open: true, step: 1 }]);
+    },
+    openSale() {
+      if (this.$store.state.sale.sale.length > 0) {
+        this.$store.commit("sale/request", ["cart", { open: true, step: 1 }]);
+      } else {
+        this.$store.commit("sale/request", ["cart", { open: true, step: 4 }]);
+      }
     },
   },
 };
 </script>
 
-<style></style>
+<style>
+.click-logo:hover {
+  cursor: pointer !important;
+}
+</style>
