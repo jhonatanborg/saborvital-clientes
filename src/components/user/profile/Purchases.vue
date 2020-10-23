@@ -7,7 +7,7 @@
         :key="key"
         @click="goToPurchase(item)"
         link
-        class="pa-5 my-5 card-purchase"
+        class="pa-5  card-purchase"
         flat
       >
         <v-row justify="space-between" align="start">
@@ -23,7 +23,7 @@
         <v-row justify="space-between">
           <v-col cols="auto">
             <v-chip
-              class="font-weight-bold"
+              class="font-weight-bold text-capitalize"
               :color="statuspurchase(item.status) + ' lighten-5'"
               :text-color="statuspurchase(item.status)"
               >{{ item.status }}</v-chip
@@ -31,6 +31,7 @@
           </v-col>
           <v-col cols="auto"> </v-col>
         </v-row>
+        <v-divider></v-divider>
       </v-card>
     </div>
     <div v-else>
@@ -52,7 +53,7 @@ export default {
   },
   computed: {
     purchases() {
-      return this.$store.state.sale.sales;
+      return this.$store.state.sale.myPurchases || [];
     },
   },
   methods: {

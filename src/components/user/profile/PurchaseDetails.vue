@@ -127,12 +127,14 @@ export default {
   },
   methods: {
     getDetails() {
-      this.$store.dispatch("sale/request", {
-        state: "purchaseDetails",
-        method: "GET",
-        url: "/sale-client/" + this.$route.params.id,
-        noMsg: true,
-      });
+      if (this.$route.params.id) {
+        this.$store.dispatch("sale/request", {
+          state: "purchaseDetails",
+          method: "GET",
+          url: "/sale-client/" + this.$route.params.id,
+          noMsg: true,
+        });
+      }
     },
   },
 };
