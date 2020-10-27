@@ -1,21 +1,21 @@
 <template>
   <div class="home grey lighten-5">
     <v-carousel
+      v-if="!$vuetify.breakpoint.xsOnly"
       cycle
-      height="500"
       hide-delimiter-background
       show-arrows-on-hover
     >
-      <v-carousel-item v-for="(slide, i) in slides" :key="i">
-        <v-img :src="main" class="px-8">
+      <v-carousel-item v-for="(slide, i) in 2" :key="i">
+        <v-img width="100%" :src="main" class="px-8">
           <v-row
             align="center"
             no-gutters
             justify="center"
             class="white--text fill-height"
           >
-            <v-col cols="5"
-              ><div class="display-2">
+            <v-col cols="12" sm="5"
+              ><div class="">
                 <span>
                   <b> Kumbucha </b>
                 </span>
@@ -29,8 +29,8 @@
                 >
               </div>
               <v-row>
-                <v-col cols="5">
-                  <v-btn block color="white" depressed>Fazer pedido</v-btn>
+                <v-col cols="12" sm="5">
+                  <v-btn block dark depressed>Fazer pedido</v-btn>
                 </v-col>
               </v-row>
             </v-col>
@@ -39,7 +39,6 @@
         </v-img>
       </v-carousel-item>
     </v-carousel>
-
     <div>
       <ChefList />
     </div>
@@ -112,6 +111,22 @@
         </v-col>
       </v-row>
     </v-img>
+    <v-bottom-navigation
+      background-color="transparent"
+      app
+      v-if="sale && sale.length > 0 && $vuetify.breakpoint.xsOnly"
+    >
+      <v-btn color="teal accent-4 " block @click="openSale()" rounded>
+        <v-row justify="center" align="center">
+          <v-col>
+            <v-icon color="white">mdi-cart</v-icon>
+          </v-col>
+          <v-col>
+            <v-chip small>{{ sale.length }}</v-chip>
+          </v-col>
+        </v-row>
+      </v-btn>
+    </v-bottom-navigation>
   </div>
 </template>
 
@@ -124,36 +139,29 @@ export default {
   name: "Home",
   data() {
     return {
-      colors: [
-        "indigo",
-        "warning",
-        "pink darken-2",
-        "red lighten-1",
-        "deep-purple accent-4",
-      ],
-      slides: ["First", "Second", "Third", "Fourth", "Fifth"],
       bannerInfo:
         "https://images.pexels.com/photos/4033328/pexels-photo-4033328.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       banner: "https://i.imgur.com/9wkdGzO.png",
       main: "https://i.imgur.com/FhzGn2D.png",
-      dialog: false,
-      items: [
-        "Batatinha",
-        "Farofa",
-        "Gengibre assado",
-        "Salada de beringela",
-        "Arroz tropero",
-        "Banana frita",
-        "Camarão empanado",
-        "Tempura de Frango",
-      ],
-      model: ["Carrots"],
       quantity: 1,
       itemQuantity: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       comment: null,
     };
   },
-  methods: {},
+  computed: {
+    sale() {
+      return this.$store.state.sale.sale || [];
+    },
+  },
+  methods: {
+    openSale() {
+      if (this.$store.state.sale.sale.length > 0) {
+        this.$store.commit("sale/request", ["cart", { open: true, step: 1 }]);
+      } else {
+        this.$store.commit("sale/request", ["cart", { open: true, step: 4 }]);
+      }
+    },
+  },
 };
 </script>
 <style>
@@ -167,7 +175,7 @@ export default {
   );
 }
 .details-banner {
-  font-size: large;
+  font-size: medium;
   font-family: "Roboto", cursive;
 }
 .title-category {

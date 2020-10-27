@@ -1,17 +1,10 @@
 <template>
   <div>
-    <v-card class="overflow-y-auto barscroll " style="max-height: 320px;" flat>
+    <v-card class="overflow-y-auto barscroll " style="height: 65vh;" flat>
       <div class="py-3 grey lighten-4">
         <span class="mx-3">Produtos</span>
       </div>
-      <v-list-item
-        v-for="(item, i) in sale"
-        :key="i"
-        dense
-        link
-        class="my-0
-                  "
-      >
+      <v-list-item v-for="(item, i) in sale" :key="i" dense link class="my-0">
         <v-list-item-content>
           <v-list-item-title>
             <b> {{ item.product_qtd }} X</b>
@@ -36,9 +29,10 @@
     <v-list-item class=" grey lighten-4">
       <span class="pay-subtitle">Subtotal</span>
       <v-spacer></v-spacer>
-      <div class="font-weight-bold black--text" v-text="convertMoney(subTotal)">
-        R$4,00
-      </div>
+      <div
+        class="font-weight-bold black--text"
+        v-text="convertMoney(subTotal)"
+      ></div>
     </v-list-item>
     <div class="col-sm-12">
       <v-btn color="teal accent-4" x-large @click="nextSale()" block dark

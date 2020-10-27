@@ -3,7 +3,7 @@
     <div class="d-flex justify-end">
       <v-btn color="error" :to="{ name: 'purchases' }" outlined>Voltar</v-btn>
     </div>
-    <v-card flat class="my-5">
+    <v-card flat class="my-5 mx-0">
       <v-alert
         :color="statuspurchase(purchase.status)"
         :text-color="statuspurchase(purchase.status)"

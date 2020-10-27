@@ -7,7 +7,7 @@
         :key="key"
         @click="goToPurchase(item)"
         link
-        class="pa-5  card-purchase"
+        class="py-5 "
         flat
       >
         <v-row justify="space-between" align="start">

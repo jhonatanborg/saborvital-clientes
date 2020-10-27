@@ -39,7 +39,6 @@
           </v-col>
           <v-col cols="11">
             <v-text-field
-              :rules="[(v, i) => !!v || 'obrigatório']"
               v-model="address.complement"
               dense
               outlined
