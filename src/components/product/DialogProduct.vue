@@ -3,6 +3,7 @@
     transition="dialog-transition"
     max-width="500px"
     scrollable
+    :retain-focus="false"
     width="500"
     @click:outside="close"
     :value="$store.state.product.DialogProduct"
@@ -88,6 +89,7 @@
         <v-row align="center">
           <v-col cols="4" sm="4">
             <v-select
+              dense
               :items="itemQuantity"
               v-model="quantity"
               hide-details
@@ -101,7 +103,6 @@
               type="submit"
               block
               @click="setSale"
-              x-large
               depressed
               color="teal accent-4"
             >
@@ -128,17 +129,6 @@ export default {
     return {
       main: "https://i.imgur.com/FhzGn2D.png",
       dialog: false,
-      items: [
-        "Batatinha",
-        "Farofa",
-        "Gengibre assado",
-        "Salada de beringela",
-        "Arroz tropero",
-        "Banana frita",
-        "Camarão empanado",
-        "Tempura de Frango",
-      ],
-      model: ["Carrots"],
       quantity: 1,
       itemQuantity: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       comment: null,

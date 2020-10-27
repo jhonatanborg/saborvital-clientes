@@ -27,6 +27,13 @@ const sale = {
       }
       return products;
     },
+    getStatusSale(state) {
+      if (state.sale.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
   actions: { ...actionsGlobal },
 };

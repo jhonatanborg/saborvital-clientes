@@ -1,6 +1,7 @@
 <template>
   <v-app class="App">
     <MenuBar />
+    <MenuMobile />
     <Sale />
     <Login />
     <MessageOrError />
@@ -12,6 +13,7 @@
 
 <script>
 import MenuBar from "@/components/shared/MenuBar.vue";
+import MenuMobile from "@/components/shared/MenuMobile.vue";
 import Sale from "@/components/sale/Sale";
 import Login from "@/components/user/session/Session";
 import MessageOrError from "@/components/shared/MessageOrError";
@@ -27,6 +29,7 @@ export default {
     Sale,
     Login,
     MessageOrError,
+    MenuMobile,
   },
 
   data: () => ({
