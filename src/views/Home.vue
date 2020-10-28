@@ -1,116 +1,157 @@
 <template>
   <div class="home grey lighten-5">
-    <v-carousel
-      v-if="!$vuetify.breakpoint.xsOnly"
-      cycle
-      hide-delimiter-background
-      show-arrows-on-hover
+    <carousel
+      class="teal accent-4 py-5"
+      :autoplay="true"
+      :perPageCustom="[
+        [360, 1],
+        [768, 1],
+        [1024, 1],
+      ]"
     >
-      <v-carousel-item v-for="(slide, i) in 2" :key="i">
-        <v-img width="100%" :src="main" class="px-8">
-          <v-row
-            align="center"
-            no-gutters
-            justify="center"
-            class="white--text fill-height"
-          >
-            <v-col cols="12" sm="5"
-              ><div class="">
-                <span>
-                  <b> Kumbucha </b>
+      <slide class="my-5">
+        <v-row no-gutters justify="center" align="center">
+          <v-col cols="auto" sm="2" lg="2" md="2" xl="2">
+            <div class="fill-height">
+              <v-img
+                max-width="150px"
+                src="https://i.imgur.com/N2nocQo.png"
+              ></v-img>
+            </div>
+          </v-col>
+          <v-col cols="12" sm="6" lg="4" xl="4">
+            <div class="pa-5 text-center">
+              <div class="title-kumbucha text-center">
+                <span>Kombucha Natural 1 </span>
+              </div>
+              <div class="text-center mb-5 white--text">
+                <span
+                  >1 unidade de Bebida Fermentada gaseificada que Auxilia no
+                  fortalecimento do sistema Imunológico (360ml)
                 </span>
               </div>
-              <div class="py-4 details-banner">
-                <span
-                  >Regulariza o organismo, revitaliza a alma e tranquiliza a
-                  mente! Rica em probióticos Fortalece o sistema imunológico
-                  Auxilia o sistema digestivo Promove a saúde das
-                  articulações</span
+              <div>
+                <v-btn block x-large depressed class="text-btn" color="white"
+                  >COMPRE AGORA</v-btn
                 >
               </div>
-              <v-row>
-                <v-col cols="12" sm="5">
-                  <v-btn block dark depressed>Fazer pedido</v-btn>
-                </v-col>
-              </v-row>
-            </v-col>
-            <v-col></v-col>
-          </v-row>
-        </v-img>
-      </v-carousel-item>
-    </v-carousel>
-    <div>
+            </div>
+          </v-col>
+        </v-row>
+      </slide>
+      <slide class="my-5">
+        <v-row no-gutters justify="center" align="center">
+          <v-col cols="auto" sm="2" lg="2" md="2" xl="2">
+            <div class="fill-height">
+              <v-img
+                max-width="150px"
+                src="https://gtslivingfoods.com/wp-content/uploads/2016/12/trilogy@2x-7.png"
+              ></v-img>
+            </div>
+          </v-col>
+          <v-col cols="12" sm="6" lg="4" xl="4">
+            <div class="pa-5 text-center">
+              <div class="title-kumbucha text-center">
+                <span>Kombucha Natural 1 </span>
+              </div>
+              <div class="text-center mb-5 white--text">
+                <span
+                  >1 unidade de Bebida Fermentada gaseificada que Auxilia no
+                  fortalecimento do sistema Imunológico (360ml)
+                </span>
+              </div>
+              <div>
+                <v-btn block x-large depressed class="text-btn" color="white"
+                  >COMPRE AGORA</v-btn
+                >
+              </div>
+            </div>
+          </v-col>
+        </v-row>
+      </slide>
+    </carousel>
+    <div class="mx-auto col-xl-8">
       <ChefList />
     </div>
-    <div class="my-5">
-      <v-row justify="center">
+    <div class="my-5 mx-auto col-xl-8">
+      <v-row justify="center" align="center">
         <v-img
           src="@/assets/logo-banner.png"
           max-height="300"
           max-width="300"
           contain
-        ></v-img
-      ></v-row>
-      <v-row justify="center" align="center">
-        <v-col cols="10" sm="6">
-          <div class="text-center details-banner">
-            <span
-              >O Sabor Vital se dedica a servir uma comida natural, fresca e
-              saudável, rica em nutrientes. O cardápio é preparado com amor,
-              simplicidade e um coração alegre.
-            </span>
-          </div>
-        </v-col>
+        ></v-img>
         <v-col cols="10">
           <v-row justify="center">
-            <v-col cols="12" sm="2" v-for="n in 5" :key="n">
-              <v-card link>
-                <v-img
-                  src="https://images.pexels.com/photos/1438540/pexels-photo-1438540.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                  class="white--text align-end"
-                  gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                  height="200px"
-                >
-                  <div class="pa-5 details-banner font-weight-bold">
-                    <span>Pratos nutritivos e sustancias</span>
-                  </div>
-                </v-img>
+            <v-col
+              cols="12"
+              sm="3"
+              v-for="(item, n) in about"
+              :key="n"
+              class="my-3"
+            >
+              <v-card flat color="transparent" class="text-center">
+                <v-avatar color="transparent" size="100">
+                  <v-img
+                    contain
+                    aspect-ratio="1.7"
+                    :src="item.icon"
+                    class="white--text align-end"
+                  >
+                  </v-img>
+                </v-avatar>
+
+                <div class="px-5 title-item ">
+                  <span v-text="item.title"></span>
+                </div>
+                <div class="line my-3">
+                  <v-divider></v-divider>
+                </div>
+                <div>
+                  <span class="details-item" v-text="item.details"> </span>
+                </div>
               </v-card>
             </v-col>
           </v-row>
-        </v-col>
-      </v-row>
-    </div>
-
-    <v-img :src="bannerInfo" max-height="300px" class="px-8">
-      <v-row dense justify="start" align="center" class="px-6 fill-height">
-        <v-col cols="4">
-          <div class="regular">
-            <div>
-              <div class="subtitle-category">
-                <span>#PROMOCAOSABORVITAL</span>
-              </div>
-              <div class="title-category">
-                <span>Promoções</span>
-              </div>
-            </div>
-            <div class="details-promo text-left py-4">
-              <span>
-                <b>
-                  Fique em casa: antes de abrir o app de delivery de comida,
-                  escolha uma entre 30 sugestões de prato</b
-                >
-              </span>
-            </div>
-            <div>
-              <v-btn dark color="green darken-4" depressed
-                >Ver mais promoções</v-btn
-              >
-            </div>
+          <!-- <v-divider></v-divider> -->
+          <div class="text-center details-banner">
+            <!-- <span
+              >O Sabor Vital se dedica a servir uma comida natural, fresca e
+              saudável, rica em nutrientes. O cardápio é preparado com amor,
+              simplicidade e um coração alegre.
+            </span> -->
           </div>
         </v-col>
       </v-row>
-    </v-img>
+    </div>
+    <div>
+      <v-img
+        src="@/assets/footer-image.png"
+        height="300px"
+        :aspect-ratio="16 / 9"
+      >
+        <v-row no-gutters dense justify="center" align="center">
+          <v-col cols="auto" sm="12">
+            <v-img
+              src="@/assets/logo-branca.png"
+              max-height="150"
+              contain
+            ></v-img>
+          </v-col>
+          <v-col cols="auto" sm="4">
+            <div class="details-promo text-center white--text">
+              <span>
+                <b>
+                  Tractors, combines, forage harvesters, balers, mower
+                  conditioners, sprayers, trailers,… All is for hired</b
+                >
+              </span>
+            </div>
+          </v-col>
+        </v-row>
+      </v-img>
+    </div>
+
     <v-bottom-navigation
       background-color="transparent"
       app
@@ -127,25 +168,55 @@
         </v-row>
       </v-btn>
     </v-bottom-navigation>
+    <Footer />
   </div>
 </template>
 
 <script>
 import ChefList from "@/components/product/ChefList.vue";
+import Footer from "@/components/shared/Footer.vue";
 export default {
   components: {
     ChefList,
+    Footer,
   },
   name: "Home",
   data() {
     return {
       bannerInfo:
-        "https://images.pexels.com/photos/4033328/pexels-photo-4033328.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "https://images.pexels.com/photos/15964/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       banner: "https://i.imgur.com/9wkdGzO.png",
       main: "https://i.imgur.com/FhzGn2D.png",
       quantity: 1,
       itemQuantity: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       comment: null,
+
+      about: [
+        {
+          icon: "https://i.imgur.com/C8jFt8Y.png",
+          title: "Organic Products",
+          details:
+            "We offer the season’s best mix of 100% certified-organic produce and hand-crafted farm products",
+        },
+        {
+          icon: "https://i.imgur.com/CDBDjfO.png",
+          title: "RFS Machines",
+          details:
+            "Tractors, combines, forage harvesters, balers, mower conditioners, sprayers, trailers,… All is for hired",
+        },
+        {
+          icon: "https://i.imgur.com/WTHfGaR.png",
+          title: "Food Strategy",
+          details:
+            "Create a broader network of organizations & businesses contributing to our food system",
+        },
+        {
+          icon: "https://i.imgur.com/o9jIwhd.png",
+          title: "Water Management",
+          details:
+            "Minimize water costs and efficiently distribute water, help farmers see improvements in yields",
+        },
+      ],
     };
   },
   computed: {
@@ -174,13 +245,16 @@ export default {
     rgba(0, 0, 255, 0.25) 10px
   );
 }
-.details-banner {
+.details-item {
   font-size: medium;
-  font-family: "Roboto", cursive;
+  color: #696969;
 }
 .title-category {
   font-size: large;
   font-weight: bold;
+  font-family: "Yanone Kaffeesatz", sans-serif;
+  font-size: 40px !important;
+  color: teal;
 }
 .subtitle-category {
   font-size: small;
@@ -188,6 +262,11 @@ export default {
 .title-product {
   font-size: 16px;
   color: #488e4b;
+}
+.title-item {
+  font-weight: 900;
+  margin-top: 15px;
+  color: #333;
 }
 .price-product {
   font-size: 16px;
@@ -202,5 +281,19 @@ export default {
 .title-banner {
   font-family: "Sansita Swashed", cursive;
   font-size: 40px;
+}
+.title-kumbucha {
+  font-family: "Yanone Kaffeesatz", sans-serif;
+  font-size: 40px;
+  color: white;
+}
+.text-btn {
+  font-family: "Yanone Kaffeesatz", sans-serif;
+  font-size: 22px !important;
+}
+.line {
+  width: 70px;
+  text-align: center;
+  margin: 0 auto;
 }
 </style>

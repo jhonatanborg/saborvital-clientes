@@ -13,6 +13,7 @@
     "dexie": "^3.0.2",
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
+    "vue-awesome-swiper": "^4.1.1",
     "vue-carousel": "^0.18.0",
     "vue-click-outside": "^1.1.0",
     "vue-router": "^3.2.0",

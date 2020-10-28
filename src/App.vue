@@ -5,7 +5,7 @@
     <Sale />
     <Login />
     <MessageOrError />
-    <v-main>
+    <v-main class="col-xl-8">
       <router-view></router-view>
     </v-main>
   </v-app>
