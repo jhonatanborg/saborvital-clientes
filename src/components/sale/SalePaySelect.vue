@@ -49,7 +49,7 @@
           </div>
           <v-divider></v-divider>
           <v-list class="mx-0">
-            <v-list-item-group class="mx-0" v-model="pay" multiple>
+            <v-list-item-group class="mx-0" v-model="pay">
               <template v-for="(item, i) in items">
                 <v-list-item
                   :key="i"
@@ -61,7 +61,6 @@
                     <v-list-item-content>
                       <v-list-item-title v-text="item"></v-list-item-title>
                     </v-list-item-content>
-
                     <v-list-item-action>
                       <v-checkbox
                         :input-value="active"
@@ -97,7 +96,7 @@ export default {
   mixins: [Mixins],
   data() {
     return {
-      items: ["Dinheiro", "Crédito", "Débito"],
+      items: ["Dinheiro", "Crédito", "Débito", "Transferência"],
       pay: null,
       change_for: null,
     };

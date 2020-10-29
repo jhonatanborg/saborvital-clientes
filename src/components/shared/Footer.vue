@@ -55,6 +55,17 @@
         </v-row>
       </v-col>
     </v-row>
+    <v-divider></v-divider>
+
+    <v-card-text class="white--text teal">
+      Powered by
+      <a
+        href="http://vuetifyjs.com"
+        target="_blank"
+        style="text-decoration:none;color: #ffffff !important;"
+        >&copy;2020 — <strong>RC2</strong></a
+      >
+    </v-card-text>
   </div>
 </template>
 
