@@ -69,6 +69,33 @@
           </v-col>
         </v-row>
       </slide>
+      <slide class="my-5">
+        <v-row no-gutters justify="center" align="center">
+          <v-col cols="auto" sm="2" lg="2" md="2" xl="2">
+            <div class="fill-height">
+              <v-img max-width="150px" src="@/assets/uva.png"></v-img>
+            </div>
+          </v-col>
+          <v-col cols="12" sm="6" lg="4" xl="4">
+            <div class="pa-5 text-center">
+              <div class="title-kumbucha text-center">
+                <span>Kombucha Natural 1 </span>
+              </div>
+              <div class="text-center mb-5 white--text">
+                <span
+                  >1 unidade de Bebida Fermentada gaseificada que Auxilia no
+                  fortalecimento do sistema Imunológico (360ml)
+                </span>
+              </div>
+              <div>
+                <v-btn block x-large depressed class="text-btn" color="white"
+                  >COMPRE AGORA</v-btn
+                >
+              </div>
+            </div>
+          </v-col>
+        </v-row>
+      </slide>
     </carousel>
     <div class="mx-auto col-xl-8">
       <ChefList />

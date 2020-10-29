@@ -28,6 +28,13 @@
       >
       <v-btn
         rounded
+        :to="{ name: 'about' }"
+        text
+        class="mr-2 text-capitalize hidden-sm-and-down"
+        >Sobre nós</v-btn
+      >
+      <v-btn
+        rounded
         color="teal accent-4"
         dark
         @click="openSale()"

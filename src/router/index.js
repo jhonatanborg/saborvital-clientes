@@ -17,9 +17,9 @@ const routes = [
     component: () => import("../views/Products.vue"),
   },
   {
-    path: "/kumbucha",
-    name: "kumbucha",
-    component: () => import("../views/Kumbucha.vue"),
+    path: "/sobre-a-empresa",
+    name: "about",
+    component: () => import("../views/About.vue"),
   },
   {
     path: "/minha-conta",
@@ -62,7 +62,7 @@ const router = new VueRouter({
 });
 router.beforeEach((to, from, next) => {
   // redirect to login page if not logged in and trying to access a restricted page
-  const publicPages = ["/lista-de-produtos", "", "/kumbucha"];
+  const publicPages = ["/lista-de-produtos", "", "/sobre-a-empresa"];
   const authRequired = !publicPages.includes(to.matched[0].path);
   const loggedIn = localStorage.getItem("token");
 

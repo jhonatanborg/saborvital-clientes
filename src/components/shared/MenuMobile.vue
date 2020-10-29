@@ -34,6 +34,11 @@
           <v-list-item-title>Cardápio</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+      <v-list-item :to="{ name: 'about' }" link>
+        <v-list-item-content>
+          <v-list-item-title>Sobre nós</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
