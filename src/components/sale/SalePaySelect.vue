@@ -7,7 +7,7 @@
       <v-divider></v-divider>
       <div class="my-2">
         {{ addressClient.street }}, {{ addressClient.number }} -
-        {{ addressClient.district }}
+        {{ addressClient.district_id.name }}
 
         {{ addressClient.complement }}
       </div>
@@ -81,7 +81,16 @@
             ></v-text-field>
           </div>
         </div>
-        <v-btn color="teal accent-4" x-large @click="validPurchase" block dark
+        <v-alert
+          dark
+          color="error "
+          icon="mdi-alert"
+          dismissible
+          :value="error"
+        >
+          Selecione uma forma de pagamento para finalizar
+        </v-alert>
+        <v-btn color="#156f72" x-large @click="validPurchase" block dark
           >Confirmar</v-btn
         >
       </div>
@@ -99,6 +108,7 @@ export default {
       items: ["Dinheiro", "Crédito", "Débito", "Transferência"],
       pay: null,
       change_for: null,
+      error: false,
     };
   },
   computed: {
@@ -124,21 +134,25 @@ export default {
   },
   methods: {
     validPurchase() {
-      let purchase = this.$store.state.sale.sale;
-      purchase.forEach((element) => {
-        delete element.product_name;
-        delete element.id;
-      });
+      if (this.pay) {
+        let purchase = this.$store.state.sale.sale;
+        purchase.forEach((element) => {
+          delete element.product_name;
+          delete element.id;
+        });
 
-      let sale = {
-        address: this.addressClient,
-        change_for: this.change_for,
-        products: purchase,
-        payment: this.pay.toString(),
-      };
-      sale.address.district_id = sale.address.district_id.id;
-      console.log(sale);
-      this.sendPuchase(sale);
+        let sale = {
+          address: this.addressClient,
+          change_for: this.change_for,
+          products: purchase,
+          payment: this.pay.toString(),
+        };
+        sale.address.district_id = sale.address.district_id.id;
+        console.log(sale);
+        this.sendPuchase(sale);
+      } else {
+        this.error = true;
+      }
     },
     sendPuchase(sale) {
       this.$store

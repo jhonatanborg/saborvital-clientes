@@ -1,7 +1,7 @@
 <template>
   <div class="grey lighten-5 ">
     <carousel
-      class="teal accent-4 py-5"
+      class="carousel py-5"
       :autoplay="true"
       :perPageCustom="[
         [360, 1],
@@ -72,7 +72,7 @@
     </carousel>
     <ChefList class="col-xl-6 mx-auto" />
     <div v-if="!$vuetify.breakpoint.xsOnly">
-      <v-app-bar class="fixed-bar" flat color="teal accent-4" dark>
+      <v-app-bar class="fixed-bar" flat color="#156f72" dark>
         <div class="mx-5 col-xl-6 mx-auto">
           <v-btn
             small
@@ -131,7 +131,7 @@
       app
       v-if="sale && sale.length > 0 && $vuetify.breakpoint.xsOnly"
     >
-      <v-btn color="teal accent-4 " block @click="openSale()" rounded>
+      <v-btn color="#156f72 " block @click="openSale()" rounded>
         <v-row justify="center" align="center">
           <v-col>
             <v-icon color="white">mdi-cart</v-icon>
@@ -216,5 +216,8 @@ export default {
   top: 5em;
   z-index: 1;
   padding-top: 100px;
+}
+.carousel {
+  background-color: #156f72;
 }
 </style>

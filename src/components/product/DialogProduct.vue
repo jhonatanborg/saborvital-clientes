@@ -104,7 +104,7 @@
               block
               @click="setSale"
               depressed
-              color="teal accent-4"
+              color="#156f72"
             >
               <div>
                 Confirmar

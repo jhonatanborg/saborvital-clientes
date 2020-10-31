@@ -3,7 +3,7 @@
     <v-row dense class="pa-5">
       <v-col cols="12">
         <v-text-field
-          color="teal accent-4"
+          color="#156f72"
           outlined
           dense
           v-model="user.name"
@@ -12,7 +12,7 @@
       </v-col>
       <v-col cols="12">
         <v-text-field
-          color="teal accent-4"
+          color="#156f72"
           outlined
           dense
           v-model="user.email"
@@ -29,7 +29,7 @@
           :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
           @click:append="show = !show"
           v-model="user.password"
-          color="teal accent-4"
+          color="#156f72"
         ></v-text-field>
       </v-col>
       <v-alert type="error" dense :value="error"> {{ message }}</v-alert>
@@ -39,7 +39,7 @@
           :loading="$store.state.loading"
           block
           x-large
-          color="teal accent-4"
+          color="#156f72"
           dark
           >Cadastrar</v-btn
         >

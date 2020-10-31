@@ -6,7 +6,7 @@
     class="overflow-y-hidden"
     @input="eventSale"
     temporary
-    :class="step == 4 ? 'teal accent-4' : 'white'"
+    :class="step == 4 ? '#156f72' : 'white'"
     clipped
     :width="$vuetify.breakpoint.xsOnly ? '100%' : '500px'"
     :value="$store.state.user.login.open"
@@ -50,7 +50,7 @@
           rounded
           :dark="step == 1 ? true : false"
           @click="step = 1"
-          :color="step == 1 ? 'teal accent-4' : 'grey lighten-2'"
+          :color="step == 1 ? '#156f72' : 'grey lighten-2'"
           >Login</v-btn
         >
       </v-col>
@@ -60,7 +60,7 @@
           :dark="step == 2 || 3 ? true : false"
           rounded
           @click="step = 2"
-          :color="step == 2 ? 'teal accent-4' : 'grey lighten-2'"
+          :color="step == 2 ? '#156f72' : 'grey lighten-2'"
           >Registrar</v-btn
         >
       </v-col>
@@ -70,7 +70,7 @@
         flat
         max-width="400px"
         class="fill-height"
-        :color="step == 4 ? 'teal accent-4' : 'white'"
+        :color="step == 4 ? '#156f72' : 'white'"
       >
         <v-window v-model="step">
           <v-window-item :value="1">

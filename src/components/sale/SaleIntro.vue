@@ -35,7 +35,7 @@
       ></div>
     </v-list-item>
     <div class="col-sm-12">
-      <v-btn color="teal accent-4" x-large @click="nextSale()" block dark
+      <v-btn color="#156f72" x-large @click="nextSale()" block dark
         >Confirmar</v-btn
       >
     </div>

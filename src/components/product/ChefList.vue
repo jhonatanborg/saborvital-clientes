@@ -98,7 +98,7 @@ export default {
 .title-promo {
   font-family: "Yanone Kaffeesatz", sans-serif;
   font-size: 40px !important;
-  color: teal;
+  color: #156f72;
 }
 .title-product {
   text-overflow: ellipsis;

@@ -1,7 +1,7 @@
 <template>
   <div>
     <carousel
-      class="teal accent-4 py-5"
+      class="carousel py-5"
       :autoplay="true"
       :perPageCustom="[
         [360, 1],
@@ -39,7 +39,7 @@
           </v-col>
         </v-row>
       </slide>
-      <slide class="teal accent-4 py-5">
+      <slide class=" py-5">
         <v-row no-gutters justify="center" align="center">
           <v-col cols="auto" sm="2" lg="2">
             <div class="fill-height">
@@ -70,49 +70,60 @@
         </v-row>
       </slide>
     </carousel>
-    <v-row dense no-gutters>
-      <v-col cols="12" sm="6">
+    <div class="my-5 mx-auto col-xl-8">
+      <v-row justify="center" align="center">
         <v-img
-          class="fill-height"
-          src="https://images.pexels.com/photos/219794/pexels-photo-219794.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+          src="@/assets/logo-banner.png"
+          max-height="300"
+          max-width="300"
+          contain
         ></v-img>
-      </v-col>
-      <v-col cols="12" sm="6" class="pa-5">
-        <v-row justify="center">
-          <v-col
-            cols="12"
-            sm="5"
-            v-for="(item, n) in about"
-            :key="n"
-            class="my-3"
-          >
-            <v-card flat color="transparent" class="text-center">
-              <v-avatar color="transparent" size="100">
-                <v-img
-                  contain
-                  aspect-ratio="1.7"
-                  :src="item.icon"
-                  class="white--text align-end"
-                >
-                </v-img>
-              </v-avatar>
+        <v-col cols="10">
+          <v-row justify="center">
+            <v-col
+              cols="12"
+              sm="3"
+              v-for="(item, n) in about"
+              :key="n"
+              class="my-3"
+            >
+              <v-card flat color="transparent" class="text-center">
+                <v-avatar color="transparent" size="100">
+                  <v-img
+                    contain
+                    aspect-ratio="1.7"
+                    :src="item.icon"
+                    class="white--text align-end"
+                  >
+                  </v-img>
+                </v-avatar>
 
-              <div class="px-5 title-item ">
-                <span v-text="item.title"></span>
-              </div>
-              <div class="line my-3">
-                <v-divider></v-divider>
-              </div>
-              <div>
-                <span class="details-item" v-text="item.details"> </span>
-              </div>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
-    <v-row no-gutters class="fill-height teal accent-4 " align="center">
-      <v-col cols="12" sm="6" class="teal accent-4">
+                <div class="px-5 title-item ">
+                  <span v-text="item.title"></span>
+                </div>
+                <div class="line my-3">
+                  <v-divider></v-divider>
+                </div>
+                <div>
+                  <span class="details-item" v-text="item.details"> </span>
+                </div>
+              </v-card>
+            </v-col>
+          </v-row>
+          <!-- <v-divider></v-divider> -->
+          <div class="text-center details-banner">
+            <!-- <span
+              >O Sabor Vital se dedica a servir uma comida natural, fresca e
+              saudável, rica em nutrientes. O cardápio é preparado com amor,
+              simplicidade e um coração alegre.
+            </span> -->
+          </div>
+        </v-col>
+      </v-row>
+    </div>
+
+    <v-row no-gutters class="fill-height theme-vital " align="center">
+      <v-col cols="12" sm="6" class="#156f72">
         <v-row justify="center" no-gutters align="center" class="my-12 ">
           <v-col cols="6" sm="3">
             <v-img src="@/assets/beer-box.png"></v-img>
@@ -219,11 +230,16 @@
         </v-col>
       </v-row>
     </v-container>
+    <div>
+      <video muted autoplay :src="video" width="100%"></video>
+    </div>
+
     <Footer />
   </div>
 </template>
 
 <script>
+const video = require("@/assets/video/saborvital_video.mp4");
 import Footer from "@/components/shared/Footer.vue";
 export default {
   components: {
@@ -231,6 +247,7 @@ export default {
   },
   data() {
     return {
+      video: video,
       icons: [
         ["fab fa-facebook", "https://www.facebook.com/"],
         ["fab fa-twitter", "https://twitter.com/"],
@@ -299,5 +316,9 @@ export default {
   color: #333;
   font-size: 13px;
   text-transform: uppercase;
+}
+.carousel,
+.theme-vital {
+  background-color: #156f72;
 }
 </style>

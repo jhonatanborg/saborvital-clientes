@@ -35,7 +35,7 @@
       >
       <v-btn
         rounded
-        color="teal accent-4"
+        color="#156f72"
         dark
         @click="openSale()"
         class="text-capitalize hidden-sm-and-down"

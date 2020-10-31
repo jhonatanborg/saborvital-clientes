@@ -9,7 +9,7 @@
           >
         </div>
         <v-text-field
-          color="teal accent-4"
+          color="#156f72"
           outlined
           v-model="code"
           label="Insira o código"
@@ -23,7 +23,7 @@
       </v-col>
 
       <v-col cols="12">
-        <v-btn block x-large @click="sendCode" color="teal accent-4" dark
+        <v-btn block x-large @click="sendCode" color="#156f72" dark
           >Confirmar</v-btn
         >
       </v-col>

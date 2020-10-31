@@ -1,7 +1,7 @@
 <template>
   <div class="home grey lighten-5">
     <carousel
-      class="teal accent-4 py-5"
+      class="carousel py-5"
       :autoplay="true"
       :perPageCustom="[
         [360, 1],
@@ -184,7 +184,7 @@
       app
       v-if="sale && sale.length > 0 && $vuetify.breakpoint.xsOnly"
     >
-      <v-btn color="teal accent-4 " block @click="openSale()" rounded>
+      <v-btn color="#156f72 " block @click="openSale()" rounded>
         <v-row justify="center" align="center">
           <v-col>
             <v-icon color="white">mdi-cart</v-icon>
@@ -322,5 +322,8 @@ export default {
   width: 70px;
   text-align: center;
   margin: 0 auto;
+}
+.carousel {
+  background-color: #156f72;
 }
 </style>

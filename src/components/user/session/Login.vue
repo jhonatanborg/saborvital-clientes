@@ -3,7 +3,7 @@
     <v-row dense class="pa-5">
       <v-col cols="12">
         <v-text-field
-          color="teal accent-4"
+          color="#156f72"
           outlined
           label="Login"
           v-model="user.email"
@@ -15,7 +15,7 @@
           label="Senha"
           append-icon="mdi-eye"
           outlined
-          color="teal accent-4"
+          color="#156f72"
           v-model="user.password"
         ></v-text-field>
         <div class="my-3">
@@ -35,7 +35,7 @@
           block
           :loading="loading"
           x-large
-          color="teal accent-4"
+          color="#156f72"
           @click="Login"
           dark
           >LOGIN</v-btn

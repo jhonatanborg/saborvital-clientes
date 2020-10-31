@@ -6,7 +6,9 @@ import store from "./store";
 import vuetify from "./plugins/vuetify";
 import VueCarousel from "vue-carousel";
 Vue.use(VueCarousel);
+import VideoBackground from "vue-responsive-video-background-player";
 
+Vue.component("video-background", VideoBackground);
 Vue.config.productionTip = false;
 
 new Vue({

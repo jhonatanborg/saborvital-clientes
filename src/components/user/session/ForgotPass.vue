@@ -12,7 +12,7 @@
           >
         </div>
         <v-text-field
-          color="teal accent-4"
+          color="#156f72"
           outlined
           :rules="emailRules"
           v-model="email"
@@ -24,7 +24,7 @@
       </v-col>
 
       <v-col cols="12">
-        <v-btn block x-large @click="resetPass" color="teal accent-4" dark
+        <v-btn block x-large @click="resetPass" color="#156f72" dark
           >Confirmar</v-btn
         >
       </v-col>

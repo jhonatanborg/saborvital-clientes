@@ -9,13 +9,13 @@
           >
         </div>
         <v-text-field
-          color="teal accent-4"
+          color="#156f72"
           outlined
           v-model="user.token"
           label="Insira o código"
         ></v-text-field>
         <v-text-field
-          color="teal accent-4"
+          color="#156f72"
           outlined
           v-model="user.password"
           label="Insira aqui sua nova senha"
@@ -26,7 +26,7 @@
       </v-col>
 
       <v-col cols="12">
-        <v-btn block x-large @click="confirmReset" color="teal accent-4" dark
+        <v-btn block x-large @click="confirmReset" color="#156f72" dark
           >Confirmar</v-btn
         >
       </v-col>
