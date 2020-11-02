@@ -1,5 +1,60 @@
 <template>
   <div class="grey lighten-5 ">
+    <ChefList class="col-xl-6 mx-auto" />
+    <div v-if="!$vuetify.breakpoint.xsOnly">
+      <v-app-bar class="fixed-bar" flat color="#156f72" dark>
+        <div class="mx-5 col-xl-6 mx-auto">
+          <v-btn
+            small
+            text
+            v-for="(item, i) in categories"
+            :key="i"
+            @click="filterScroll(item)"
+          >
+            <b v-text="item.name"> </b>
+          </v-btn>
+        </div>
+      </v-app-bar>
+    </div>
+    <div v-else class="col-sm-10">
+      <v-row justify-sm="center" dense>
+        <v-col sm="auto">
+          <v-overflow-btn
+            dense
+            hide-details
+            class="my-0 py-0"
+            color="#ffa602"
+            @change="filterScrollM()"
+            v-model="filterItem"
+            :items="categories"
+            item-text="name"
+            item-value="id"
+            label="Relevância"
+            target="#dropdown-example"
+          ></v-overflow-btn>
+        </v-col>
+      </v-row>
+    </div>
+
+    <v-container fluid class="col-xl-6">
+      <div v-for="(item, i) in products" :key="i" cols="12">
+        <div :id="'go' + item.id">
+          <div class="title-category " v-if="item.products.length > 0">
+            <span v-text="item.name"></span>
+          </div>
+        </div>
+        <v-row>
+          <v-col
+            cols="12"
+            sm="4"
+            v-for="(product, i) in item.products"
+            :key="i"
+          >
+            <CardProduct :product="product" />
+          </v-col>
+        </v-row>
+      </div>
+    </v-container>
     <carousel
       class="carousel py-5"
       :autoplay="true"
@@ -70,62 +125,33 @@
         </v-row>
       </slide>
     </carousel>
-    <ChefList class="col-xl-6 mx-auto" />
-    <div v-if="!$vuetify.breakpoint.xsOnly">
-      <v-app-bar class="fixed-bar" flat color="#156f72" dark>
-        <div class="mx-5 col-xl-6 mx-auto">
-          <v-btn
-            small
-            text
-            v-for="(item, i) in categories"
-            :key="i"
-            @click="filterScroll(item)"
-          >
-            <b v-text="item.name"> </b>
-          </v-btn>
-        </div>
-      </v-app-bar>
-    </div>
-    <div v-else class="col-sm-10">
-      <v-row justify-sm="center" dense>
-        <v-col sm="auto">
-          <v-overflow-btn
-            dense
-            hide-details
-            class="my-0 py-0"
-            color="#ffa602"
-            @change="filterScrollM()"
-            v-model="filterItem"
-            :items="categories"
-            item-text="name"
-            item-value="id"
-            label="Relevância"
-            target="#dropdown-example"
-          ></v-overflow-btn>
-        </v-col>
-      </v-row>
-    </div>
-
-    <v-container fluid class="col-xl-6">
-      <div v-for="(item, i) in products" :key="i" cols="12">
-        <div :id="'go' + item.id">
-          <div class="title-category " v-if="item.products.length > 0">
-            <span v-text="item.name"></span>
-          </div>
-        </div>
-        <v-row>
-          <v-col
-            cols="12"
-            sm="4"
-            v-for="(product, i) in item.products"
-            :key="i"
-          >
-            <CardProduct :product="product" />
+    <div>
+      <v-img
+        src="@/assets/footer-image.png"
+        height="300px"
+        :aspect-ratio="16 / 9"
+      >
+        <v-row no-gutters dense justify="center" align="center">
+          <v-col cols="auto" sm="12">
+            <v-img
+              src="@/assets/logo-branca.png"
+              max-height="150"
+              contain
+            ></v-img>
+          </v-col>
+          <v-col cols="auto" sm="4">
+            <div class="details-promo text-center white--text">
+              <span>
+                <b>
+                  Tractors, combines, forage harvesters, balers, mower
+                  conditioners, sprayers, trailers,… All is for hired</b
+                >
+              </span>
+            </div>
           </v-col>
         </v-row>
-      </div>
-    </v-container>
-
+      </v-img>
+    </div>
     <v-bottom-navigation
       background-color="transparent"
       app
