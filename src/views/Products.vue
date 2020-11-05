@@ -55,81 +55,17 @@
         </v-row>
       </div>
     </v-container>
-    <carousel
-      class="carousel py-5"
-      :autoplay="true"
-      :perPageCustom="[
-        [360, 1],
-        [768, 1],
-        [1024, 1],
-      ]"
-    >
-      <slide class="my-5">
-        <v-row no-gutters justify="center" align="center">
-          <v-col cols="auto" sm="2" lg="2" md="2" xl="2">
-            <div class="fill-height">
-              <v-img
-                max-width="150px"
-                src="https://i.imgur.com/N2nocQo.png"
-              ></v-img>
-            </div>
-          </v-col>
-          <v-col cols="12" sm="6" lg="4" xl="4">
-            <div class="pa-5 text-center">
-              <div class="title-kumbucha text-center">
-                <span>Kombucha Natural </span>
-              </div>
-              <div class="text-center mb-5 white--text">
-                <span
-                  >1 unidade de Bebida Fermentada gaseificada que Auxilia no
-                  fortalecimento do sistema Imunológico (360ml)
-                </span>
-              </div>
-              <div>
-                <v-btn block x-large depressed class="text-btn" color="white"
-                  >COMPRE AGORA</v-btn
-                >
-              </div>
-            </div>
-          </v-col>
-        </v-row>
-      </slide>
-      <slide class="my-5">
-        <v-row no-gutters justify="center" align="center">
-          <v-col cols="auto" sm="2" lg="2" md="2" xl="2">
-            <div class="fill-height">
-              <v-img
-                max-width="150px"
-                src="https://gtslivingfoods.com/wp-content/uploads/2016/12/trilogy@2x-7.png"
-              ></v-img>
-            </div>
-          </v-col>
-          <v-col cols="12" sm="6" lg="4" xl="4">
-            <div class="pa-5 text-center">
-              <div class="title-kumbucha text-center">
-                <span>Kombucha Natural </span>
-              </div>
-              <div class="text-center mb-5 white--text">
-                <span
-                  >1 unidade de Bebida Fermentada gaseificada que Auxilia no
-                  fortalecimento do sistema Imunológico (360ml)
-                </span>
-              </div>
-              <div>
-                <v-btn block x-large depressed class="text-btn" color="white"
-                  >COMPRE AGORA</v-btn
-                >
-              </div>
-            </div>
-          </v-col>
-        </v-row>
-      </slide>
-    </carousel>
+
     <div>
       <v-img
-        src="@/assets/footer-image.png"
-        height="300px"
+        :src="
+          bannerBottom.image
+            ? $store.state.server + bannerBottom.image
+            : 'https://www.atlantawatershed.org/wp-content/uploads/2017/06/default-placeholder-300x300.png'
+        "
+        height="400px"
         :aspect-ratio="16 / 9"
+        gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
       >
         <v-row no-gutters dense justify="center" align="center">
           <v-col cols="auto" sm="12">
@@ -140,12 +76,15 @@
             ></v-img>
           </v-col>
           <v-col cols="auto" sm="4">
-            <div class="details-promo text-center white--text">
+            <div class="px-5 title-bootom-banner text-center">
+              <span v-text="bannerBottom.title"></span>
+            </div>
+            <div class="line my-3">
+              <v-divider></v-divider>
+            </div>
+            <div class="details-promo  text-center white--text">
               <span>
-                <b>
-                  Tractors, combines, forage harvesters, balers, mower
-                  conditioners, sprayers, trailers,… All is for hired</b
-                >
+                <b v-text="bannerBottom.description"> </b>
               </span>
             </div>
           </v-col>
@@ -202,6 +141,15 @@ export default {
     categories() {
       return this.$store.getters["product/getCategories"];
     },
+    bannerBottom() {
+      let result = [];
+      if (this.$store.state.banner.banners) {
+        result = this.$store.state.banner.banners.filter((banner) => {
+          return banner.type == "Bottom";
+        });
+      }
+      return result[0] || [];
+    },
   },
   methods: {
     openSale() {
@@ -245,5 +193,10 @@ export default {
 }
 .carousel {
   background-color: #156f72;
+}
+.title-bootom-banner {
+  font-family: "Yanone Kaffeesatz", sans-serif;
+  font-size: 40px !important;
+  color: white;
 }
 </style>

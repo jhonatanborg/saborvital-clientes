@@ -23,6 +23,7 @@ export default {
   mounted() {
     this.getSaleIdb();
     this.getProducts();
+    this.getBanners();
   },
   components: {
     MenuBar,
@@ -50,6 +51,14 @@ export default {
         state: "products",
         method: "GET",
         url: "/product/",
+        noMsg: true,
+      });
+    },
+    getBanners() {
+      this.$store.dispatch("banner/request", {
+        state: "banners",
+        method: "GET",
+        url: "/banner",
         noMsg: true,
       });
     },

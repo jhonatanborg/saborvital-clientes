@@ -83,16 +83,20 @@
             <v-col
               cols="12"
               sm="3"
-              v-for="(item, n) in about"
+              v-for="(item, n) in topItems"
               :key="n"
               class="my-3"
             >
               <v-card flat color="transparent" class="text-center">
-                <v-avatar color="transparent" size="100">
+                <v-avatar tile color="transparent" size="130">
                   <v-img
                     contain
                     aspect-ratio="1.7"
-                    :src="item.icon"
+                    :src="
+                      item.image
+                        ? $store.state.server + item.image
+                        : 'https://www.atlantawatershed.org/wp-content/uploads/2017/06/default-placeholder-300x300.png'
+                    "
                     class="white--text align-end"
                   >
                   </v-img>
@@ -105,7 +109,7 @@
                   <v-divider></v-divider>
                 </div>
                 <div>
-                  <span class="details-item" v-text="item.details"> </span>
+                  <span class="details-item" v-text="item.description"> </span>
                 </div>
               </v-card>
             </v-col>
@@ -125,12 +129,9 @@
     <v-row no-gutters class="fill-height theme-vital " align="center">
       <v-col cols="12" sm="6" class="#156f72">
         <v-row justify="center" no-gutters align="center" class="my-12 ">
-          <v-col cols="6" sm="3">
-            <v-img src="@/assets/beer-box.png"></v-img>
-          </v-col>
           <v-col cols="12" sm="12">
             <div class="text-center mt-5 title-kumbucha">
-              <span>Kumbucha</span>
+              <span>{{ centerBanner.title }}</span>
             </div>
             <div class="text-center white--text pa-5 ">
               <span>
@@ -146,7 +147,11 @@
       <v-col cols="12" sm="6">
         <v-img
           class="fill-height"
-          src="https://images.pexels.com/photos/1640769/pexels-photo-1640769.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+          :src="
+            centerBanner.image
+              ? $store.state.server + centerBanner.image
+              : 'https://www.atlantawatershed.org/wp-content/uploads/2017/06/default-placeholder-300x300.png'
+          "
         ></v-img>
       </v-col>
     </v-row>
@@ -154,78 +159,37 @@
       <v-row justify="center" align="center">
         <v-col cols="12" sm="12">
           <div class="title-team text-center">
-            <span>Equipe Sabor Vital</span>
+            <span v-text="team.title">Equipe Sabor Vital</span>
           </div>
           <div class="text-center pa-5 text-subtitle">
-            <span
-              >Lorem ipsum dolor sit amet consectetur adipisicing elit sed do
-              eiusmotempor incididunt ut labore et dolore magna aliqua enim
-              minim veniam
-            </span>
+            <span v-text="team.description"> </span>
           </div>
         </v-col>
-        <v-col cols="12" sm="3">
-          <v-card flat>
-            <v-img
-              src="https://images.unsplash.com/photo-1532635211-8ec15f2ce05c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-            ></v-img>
-            <div class="my-5">
-              <div class="text-center team-name">
-                <span>Jeferson Santos</span>
+      </v-row>
+      <v-row justify="center">
+        <v-col cols="12" sm="3" v-for="(item, index) in chefe" :key="index">
+          <v-card class="grey lighten-5" flat>
+            <v-row justify="center">
+              <v-avatar class="ma-5" tile size="250">
+                <v-img
+                  :src="
+                    item.image
+                      ? $store.state.server + item.image
+                      : 'https://www.atlantawatershed.org/wp-content/uploads/2017/06/default-placeholder-300x300.png'
+                  "
+                ></v-img>
+              </v-avatar>
+
+              <div class="my-5">
+                <div class="text-center team-name">
+                  <span v-text="item.title"></span>
+                </div>
+                <v-divider class="mx-12 my-3"></v-divider>
+                <div class="text-center team-function ">
+                  <span v-text="item.description"></span>
+                </div>
               </div>
-              <v-divider class="mx-12 my-3"></v-divider>
-              <div class="text-center team-function ">
-                <span>Chefe de cozinha</span>
-              </div>
-            </div>
-          </v-card>
-        </v-col>
-        <v-col cols="12" sm="3">
-          <v-card flat>
-            <v-img
-              src="https://images.pexels.com/photos/4457124/pexels-photo-4457124.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-            ></v-img>
-            <div class="my-5">
-              <div class="text-center team-name">
-                <span>Jeferson Santos</span>
-              </div>
-              <v-divider class="mx-12 my-3"></v-divider>
-              <div class="text-center team-function ">
-                <span>Chefe de cozinha</span>
-              </div>
-            </div>
-          </v-card>
-        </v-col>
-        <v-col cols="12" sm="3">
-          <v-card flat>
-            <v-img
-              src="https://images.pexels.com/photos/4282725/pexels-photo-4282725.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-            ></v-img>
-            <div class="my-5">
-              <div class="text-center team-name">
-                <span>Jeferson Santos</span>
-              </div>
-              <v-divider class="mx-12 my-3"></v-divider>
-              <div class="text-center team-function ">
-                <span>Chefe de cozinha</span>
-              </div>
-            </div>
-          </v-card>
-        </v-col>
-        <v-col cols="12" sm="3">
-          <v-card flat>
-            <v-img
-              src="https://images.pexels.com/photos/3338675/pexels-photo-3338675.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-            ></v-img>
-            <div class="my-5">
-              <div class="text-center team-name">
-                <span>Jeferson Santos</span>
-              </div>
-              <v-divider class="mx-12 my-3"></v-divider>
-              <div class="text-center team-function ">
-                <span>Chefe de cozinha</span>
-              </div>
-            </div>
+            </v-row>
           </v-card>
         </v-col>
       </v-row>
@@ -233,7 +197,6 @@
     <div>
       <video muted autoplay :src="video" width="100%"></video>
     </div>
-
     <Footer />
   </div>
 </template>
@@ -244,6 +207,36 @@ import Footer from "@/components/shared/Footer.vue";
 export default {
   components: {
     Footer,
+  },
+  computed: {
+    banners() {
+      return this.$store.state.banner.banners || [];
+    },
+    topItems() {
+      let result = this.banners.filter((banner) => {
+        return banner.type == "Home";
+      });
+      return result || [];
+    },
+    centerBanner() {
+      let result = this.banners.filter((banner) => {
+        return banner.type == "Center";
+      });
+
+      return result[0] || [];
+    },
+    team() {
+      let result = this.banners.filter((banner) => {
+        return banner.type == "Team";
+      });
+      return result[0] || [];
+    },
+    chefe() {
+      let result = this.banners.filter((banner) => {
+        return banner.type == "Chefe";
+      });
+      return result || [];
+    },
   },
   data() {
     return {

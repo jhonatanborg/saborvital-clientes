@@ -113,16 +113,20 @@
             <v-col
               cols="12"
               sm="3"
-              v-for="(item, n) in about"
+              v-for="(item, n) in itemsTop"
               :key="n"
               class="my-3"
             >
               <v-card flat color="transparent" class="text-center">
-                <v-avatar color="transparent" size="100">
+                <v-avatar tile color="transparent" size="100">
                   <v-img
                     contain
                     aspect-ratio="1.7"
-                    :src="item.icon"
+                    :src="
+                      item.image
+                        ? $store.state.server + item.image
+                        : 'https://www.atlantawatershed.org/wp-content/uploads/2017/06/default-placeholder-300x300.png'
+                    "
                     class="white--text align-end"
                   >
                   </v-img>
@@ -135,7 +139,7 @@
                   <v-divider></v-divider>
                 </div>
                 <div>
-                  <span class="details-item" v-text="item.details"> </span>
+                  <span class="details-item" v-text="item.description"> </span>
                 </div>
               </v-card>
             </v-col>
@@ -153,9 +157,14 @@
     </div>
     <div>
       <v-img
-        src="@/assets/footer-image.png"
-        height="300px"
+        :src="
+          bannerBottom.image
+            ? $store.state.server + bannerBottom.image
+            : 'https://www.atlantawatershed.org/wp-content/uploads/2017/06/default-placeholder-300x300.png'
+        "
+        height="400px"
         :aspect-ratio="16 / 9"
+        gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
       >
         <v-row no-gutters dense justify="center" align="center">
           <v-col cols="auto" sm="12">
@@ -166,12 +175,15 @@
             ></v-img>
           </v-col>
           <v-col cols="auto" sm="4">
+            <div class="px-5 title-bootom-banner white-text text-center">
+              <span v-text="bannerBottom.title"></span>
+            </div>
+            <div class="line my-3">
+              <v-divider></v-divider>
+            </div>
             <div class="details-promo text-center white--text">
               <span>
-                <b>
-                  Tractors, combines, forage harvesters, balers, mower
-                  conditioners, sprayers, trailers,… All is for hired</b
-                >
+                <b v-text="bannerBottom.description"> </b>
               </span>
             </div>
           </v-col>
@@ -217,38 +229,29 @@ export default {
       quantity: 1,
       itemQuantity: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       comment: null,
-
-      about: [
-        {
-          icon: "https://i.imgur.com/C8jFt8Y.png",
-          title: "Organic Products",
-          details:
-            "We offer the season’s best mix of 100% certified-organic produce and hand-crafted farm products",
-        },
-        {
-          icon: "https://i.imgur.com/CDBDjfO.png",
-          title: "RFS Machines",
-          details:
-            "Tractors, combines, forage harvesters, balers, mower conditioners, sprayers, trailers,… All is for hired",
-        },
-        {
-          icon: "https://i.imgur.com/WTHfGaR.png",
-          title: "Food Strategy",
-          details:
-            "Create a broader network of organizations & businesses contributing to our food system",
-        },
-        {
-          icon: "https://i.imgur.com/o9jIwhd.png",
-          title: "Water Management",
-          details:
-            "Minimize water costs and efficiently distribute water, help farmers see improvements in yields",
-        },
-      ],
     };
   },
   computed: {
     sale() {
       return this.$store.state.sale.sale || [];
+    },
+    itemsTop() {
+      let result = [];
+      if (this.$store.state.banner.banners) {
+        result = this.$store.state.banner.banners.filter((banner) => {
+          return banner.type == "Home";
+        });
+      }
+      return result || [];
+    },
+    bannerBottom() {
+      let result = [];
+      if (this.$store.state.banner.banners) {
+        result = this.$store.state.banner.banners.filter((banner) => {
+          return banner.type == "Bottom";
+        });
+      }
+      return result[0] || [];
     },
   },
   methods: {
@@ -325,5 +328,10 @@ export default {
 }
 .carousel {
   background-color: #156f72;
+}
+.title-bootom-banner {
+  font-family: "Yanone Kaffeesatz", sans-serif;
+  font-size: 40px !important;
+  color: white;
 }
 </style>
