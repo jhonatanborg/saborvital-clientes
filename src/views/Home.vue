@@ -9,88 +9,30 @@
         [1024, 1],
       ]"
     >
-      <slide class="my-5">
+      <slide class="my-5" v-for="(item, index) in carouselPages" :key="index">
         <v-row no-gutters justify="center" align="center">
-          <v-col cols="auto" sm="2" lg="2" md="2" xl="2">
+          <v-col cols="auto" sm="2" lg="3" md="2" xl="2">
             <div class="fill-height">
               <v-img
-                max-width="150px"
-                src="https://i.imgur.com/N2nocQo.png"
+                max-width="350px"
+                :src="
+                  item.image
+                    ? $store.state.server + item.image
+                    : 'https://www.atlantawatershed.org/wp-content/uploads/2017/06/default-placeholder-300x300.png'
+                "
               ></v-img>
             </div>
           </v-col>
           <v-col cols="12" sm="6" lg="4" xl="4">
             <div class="pa-5 text-center">
               <div class="title-kumbucha text-center">
-                <span>Kombucha Natural 1 </span>
+                <span v-text="item.title"></span>
               </div>
               <div class="text-center mb-5 white--text">
-                <span
+                <span v-text="item.description"
                   >1 unidade de Bebida Fermentada gaseificada que Auxilia no
                   fortalecimento do sistema Imunológico (360ml)
                 </span>
-              </div>
-              <div>
-                <v-btn block x-large depressed class="text-btn" color="white"
-                  >COMPRE AGORA</v-btn
-                >
-              </div>
-            </div>
-          </v-col>
-        </v-row>
-      </slide>
-      <slide class="my-5">
-        <v-row no-gutters justify="center" align="center">
-          <v-col cols="auto" sm="2" lg="2" md="2" xl="2">
-            <div class="fill-height">
-              <v-img
-                max-width="150px"
-                src="https://gtslivingfoods.com/wp-content/uploads/2016/12/trilogy@2x-7.png"
-              ></v-img>
-            </div>
-          </v-col>
-          <v-col cols="12" sm="6" lg="4" xl="4">
-            <div class="pa-5 text-center">
-              <div class="title-kumbucha text-center">
-                <span>Kombucha Natural 1 </span>
-              </div>
-              <div class="text-center mb-5 white--text">
-                <span
-                  >1 unidade de Bebida Fermentada gaseificada que Auxilia no
-                  fortalecimento do sistema Imunológico (360ml)
-                </span>
-              </div>
-              <div>
-                <v-btn block x-large depressed class="text-btn" color="white"
-                  >COMPRE AGORA</v-btn
-                >
-              </div>
-            </div>
-          </v-col>
-        </v-row>
-      </slide>
-      <slide class="my-5">
-        <v-row no-gutters justify="center" align="center">
-          <v-col cols="auto" sm="2" lg="2" md="2" xl="2">
-            <div class="fill-height">
-              <v-img max-width="150px" src="@/assets/uva.png"></v-img>
-            </div>
-          </v-col>
-          <v-col cols="12" sm="6" lg="4" xl="4">
-            <div class="pa-5 text-center">
-              <div class="title-kumbucha text-center">
-                <span>Kombucha Natural 1 </span>
-              </div>
-              <div class="text-center mb-5 white--text">
-                <span
-                  >1 unidade de Bebida Fermentada gaseificada que Auxilia no
-                  fortalecimento do sistema Imunológico (360ml)
-                </span>
-              </div>
-              <div>
-                <v-btn block x-large depressed class="text-btn" color="white"
-                  >COMPRE AGORA</v-btn
-                >
               </div>
             </div>
           </v-col>
@@ -252,6 +194,17 @@ export default {
         });
       }
       return result[0] || [];
+    },
+    carouselPages() {
+      let result = [];
+      if (this.$store.state.banner.banners) {
+        result = this.$store.state.banner.banners.filter((banner) => {
+          if (banner.type === "Carousel" && banner.title !== null) {
+            return banner.type == "Carousel";
+          }
+        });
+      }
+      return result || [];
     },
   },
   methods: {
