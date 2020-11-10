@@ -4,14 +4,11 @@
       <div class="regular ">
         <div>
           <div class="title-promo text-center">
-            <span>Sugestões do chefe</span>
+            <span v-text="SuggestedBanner.title">Sugestões do chefe</span>
           </div>
         </div>
         <div class="details-promo pa-4 text-center">
-          <span
-            >Fique em casa: antes de abrir o app de delivery de comida, escolha
-            uma entre 30 sugestões de prato</span
-          >
+          <span v-text="SuggestedBanner.description"></span>
         </div>
       </div>
     </v-col>
@@ -77,6 +74,17 @@ export default {
     },
     suggesteds() {
       return this.$store.getters["product/getSuggesteds"];
+    },
+    SuggestedBanner() {
+      let result = [];
+      if (this.$store.state.banner.banners) {
+        result = this.$store.state.banner.banners.filter((banner) => {
+          if (banner.type === "Sugestao" && banner.title !== null) {
+            return banner.type == "Sugestao";
+          }
+        });
+      }
+      return result[0] || [];
     },
   },
   methods: {

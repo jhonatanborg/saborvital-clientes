@@ -82,10 +82,7 @@
 
     <div class="white--text d-flex justify-center py-5">
       Powered by
-      <a
-        href="http://vuetifyjs.com"
-        target="_blank"
-        style="text-decoration:none;color: #ffffff !important;"
+      <a style="text-decoration:none;color: #ffffff !important;"
         >&copy;2020 — <strong>RC2</strong></a
       >
     </div>

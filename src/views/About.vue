@@ -9,61 +9,30 @@
         [1024, 1],
       ]"
     >
-      <slide>
+      <slide class="my-5" v-for="(item, index) in carouselPages" :key="index">
         <v-row no-gutters justify="center" align="center">
-          <v-col cols="auto" sm="2" lg="2">
+          <v-col cols="auto" sm="2" lg="3" md="2" xl="2">
             <div class="fill-height">
               <v-img
-                max-width="150px"
-                src="https://i.imgur.com/N2nocQo.png"
+                max-width="350px"
+                :src="
+                  item.image
+                    ? $store.state.server + item.image
+                    : 'https://www.atlantawatershed.org/wp-content/uploads/2017/06/default-placeholder-300x300.png'
+                "
               ></v-img>
             </div>
           </v-col>
-          <v-col cols="12" sm="6">
+          <v-col cols="12" sm="6" lg="4" xl="4">
             <div class="pa-5 text-center">
               <div class="title-kumbucha text-center">
-                <span>Kombucha Natural </span>
+                <span v-text="item.title"></span>
               </div>
               <div class="text-center mb-5 white--text">
-                <span
+                <span v-text="item.description"
                   >1 unidade de Bebida Fermentada gaseificada que Auxilia no
                   fortalecimento do sistema Imunológico (360ml)
                 </span>
-              </div>
-              <div>
-                <v-btn block x-large depressed class="text-btn" color="white"
-                  >COMPRE AGORA</v-btn
-                >
-              </div>
-            </div>
-          </v-col>
-        </v-row>
-      </slide>
-      <slide class=" py-5">
-        <v-row no-gutters justify="center" align="center">
-          <v-col cols="auto" sm="2" lg="2">
-            <div class="fill-height">
-              <v-img
-                max-width="150px"
-                src="https://i.imgur.com/N2nocQo.png"
-              ></v-img>
-            </div>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <div class="pa-5 text-center">
-              <div class="title-kumbucha text-center">
-                <span>Kombucha Natural </span>
-              </div>
-              <div class="text-center mb-5 white--text">
-                <span
-                  >1 unidade de Bebida Fermentada gaseificada que Auxilia no
-                  fortalecimento do sistema Imunológico (360ml)
-                </span>
-              </div>
-              <div>
-                <v-btn block x-large depressed class="text-btn" color="white"
-                  >COMPRE AGORA</v-btn
-                >
               </div>
             </div>
           </v-col>
@@ -78,7 +47,7 @@
           max-width="300"
           contain
         ></v-img>
-        <v-col cols="10">
+        <v-col cols="12">
           <v-row justify="center">
             <v-col
               cols="12"
@@ -115,13 +84,7 @@
             </v-col>
           </v-row>
           <!-- <v-divider></v-divider> -->
-          <div class="text-center details-banner">
-            <!-- <span
-              >O Sabor Vital se dedica a servir uma comida natural, fresca e
-              saudável, rica em nutrientes. O cardápio é preparado com amor,
-              simplicidade e um coração alegre.
-            </span> -->
-          </div>
+          <div class="text-center details-banner"></div>
         </v-col>
       </v-row>
     </div>
@@ -134,12 +97,7 @@
               <span>{{ centerBanner.title }}</span>
             </div>
             <div class="text-center white--text pa-5 ">
-              <span>
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                aliquyam erat, sed diam voluptua. At vero eos et accusam et
-                justo duo dolores et ea rebum.
-              </span>
+              <span v-text="centerBanner.description"> </span>
             </div>
           </v-col>
         </v-row>
@@ -209,6 +167,17 @@ export default {
     Footer,
   },
   computed: {
+    carouselPages() {
+      let result = [];
+      if (this.$store.state.banner.banners) {
+        result = this.$store.state.banner.banners.filter((banner) => {
+          if (banner.type === "Carousel" && banner.title !== null) {
+            return banner.type == "Carousel";
+          }
+        });
+      }
+      return result || [];
+    },
     banners() {
       return this.$store.state.banner.banners || [];
     },
@@ -250,32 +219,6 @@ export default {
         ["fab fa-instagram", "https://instagram.com/"],
       ],
       banner: "https://i.ytimg.com/vi/YyUhslfLfZM/maxresdefault.jpg",
-      about: [
-        {
-          icon: "https://i.imgur.com/C8jFt8Y.png",
-          title: "Organic Products",
-          details:
-            "We offer the season’s best mix of 100% certified-organic produce and hand-crafted farm products",
-        },
-        {
-          icon: "https://i.imgur.com/CDBDjfO.png",
-          title: "RFS Machines",
-          details:
-            "Tractors, combines, forage harvesters, balers, mower conditioners, sprayers, trailers,… All is for hired",
-        },
-        {
-          icon: "https://i.imgur.com/WTHfGaR.png",
-          title: "Food Strategy",
-          details:
-            "Create a broader network of organizations & businesses contributing to our food system",
-        },
-        {
-          icon: "https://i.imgur.com/o9jIwhd.png",
-          title: "Water Management",
-          details:
-            "Minimize water costs and efficiently distribute water, help farmers see improvements in yields",
-        },
-      ],
     };
   },
 };
