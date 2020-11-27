@@ -1,6 +1,8 @@
 <template>
   <v-app class="App">
-    <MenuBar />
+    <div>
+      <MenuBar />
+    </div>
     <MenuMobile />
     <Sale />
     <Login />
@@ -12,7 +14,7 @@
 </template>
 
 <script>
-import MenuBar from "@/components/shared/MenuBar.vue";
+// import MenuBar from "@/components/shared/MenuBar.vue";
 import MenuMobile from "@/components/shared/MenuMobile.vue";
 import Sale from "@/components/sale/Sale";
 import Login from "@/components/user/session/Session";
@@ -26,7 +28,7 @@ export default {
     this.getBanners();
   },
   components: {
-    MenuBar,
+    // MenuBar,
     Sale,
     Login,
     MessageOrError,
