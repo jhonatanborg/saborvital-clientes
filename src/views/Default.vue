@@ -8,12 +8,12 @@
           </v-col>
           <v-col cols="12">
             <div class="title white--text text-center">
-              <span>Estamos em manuntenção!</span>
+              <span>Estamos em manutenção!</span>
             </div>
             <div class="white--text text-center my-3">
               <span
                 >Em breve o <b>Sabor Vital</b> estará com um site novinho para
-                atender nossos clientes</span
+                atender nossos clientes.</span
               >
             </div>
           </v-col>
