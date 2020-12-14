@@ -10,7 +10,6 @@ const routes = [
     path: "/",
     component: Home,
     name: "home",
-    redirect: { name: "default" },
   },
   {
     path: "/lista-de-produtos",
