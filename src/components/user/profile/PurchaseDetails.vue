@@ -1,6 +1,16 @@
 <template>
   <div id="purchase-details" v-if="purchase.id">
-    <div class="d-flex justify-end">
+    <div class="d-flex justify-space-between align-center">
+      <v-btn
+        @click="sendWhatsApp"
+        x-large
+        large
+        depressed
+        rounded
+        dark
+        color="#25d366"
+        >Fale conosco<v-icon class="ml-3">mdi-whatsapp</v-icon></v-btn
+      >
       <v-btn color="error" :to="{ name: 'purchases' }" outlined>Voltar</v-btn>
     </div>
     <v-card flat class="my-5 mx-0">
@@ -135,6 +145,9 @@ export default {
           noMsg: true,
         });
       }
+    },
+    sendWhatsApp() {
+      window.location.href = `https://api.whatsapp.com/send?phone=5561999232171&text=ol%C3%A1!%20tenho%20duvidas%20sobre%20meu%20pedido%20%20${this.$route.params.id}%20no%20site%20saborvital`;
     },
   },
 };

@@ -1,13 +1,13 @@
 <template>
   <div>
-    <v-card class="pa-5" flat>
+    <v-card class="pa-1" flat>
       <div class="">
         <span class="font-weight-bold">Endereço de entrega</span>
       </div>
       <v-divider></v-divider>
       <div class="my-2">
         {{ addressClient.street }}, {{ addressClient.number }} -
-        {{ addressClient.district_id.name }}
+        {{ addressClient.district }}
 
         {{ addressClient.complement }}
       </div>
@@ -71,28 +71,24 @@
                 </v-list-item>
               </template>
             </v-list-item-group>
+            <div v-if="pay === 'Dinheiro'" class="d-flex justify-space-between">
+              <v-text-field
+                v-model="change_for"
+                outlined
+                dense
+                label="Troco para?"
+              ></v-text-field>
+            </div>
+            <v-btn
+              color="teal accent-4"
+              x-large
+              @click="validPurchase"
+              block
+              dark
+              >Confirmar</v-btn
+            >
           </v-list>
-          <div class="d-flex justify-space-between my-2">
-            <v-text-field
-              v-model="change_for"
-              outlined
-              dense
-              label="Troco para?"
-            ></v-text-field>
-          </div>
         </div>
-        <v-alert
-          dark
-          color="error "
-          icon="mdi-alert"
-          dismissible
-          :value="error"
-        >
-          Selecione uma forma de pagamento para finalizar
-        </v-alert>
-        <v-btn color="#156f72" x-large @click="validPurchase" block dark
-          >Confirmar</v-btn
-        >
       </div>
     </v-card>
   </div>
@@ -105,10 +101,9 @@ export default {
   mixins: [Mixins],
   data() {
     return {
-      items: ["Dinheiro", "Crédito", "Débito", "Transferência"],
+      items: ["Dinheiro", "PIX", "Pagamento online (MercadoPago)"],
       pay: null,
       change_for: null,
-      error: false,
     };
   },
   computed: {
@@ -134,25 +129,21 @@ export default {
   },
   methods: {
     validPurchase() {
-      if (this.pay) {
-        let purchase = this.$store.state.sale.sale;
-        purchase.forEach((element) => {
-          delete element.product_name;
-          delete element.id;
-        });
+      let purchase = this.$store.state.sale.sale;
+      purchase.forEach((element) => {
+        delete element.product_name;
+        delete element.id;
+      });
 
-        let sale = {
-          address: this.addressClient,
-          change_for: this.change_for,
-          products: purchase,
-          payment: this.pay.toString(),
-        };
-        sale.address.district_id = sale.address.district_id.id;
-        console.log(sale);
-        this.sendPuchase(sale);
-      } else {
-        this.error = true;
-      }
+      let sale = {
+        address: this.addressClient,
+        change_for: this.change_for,
+        products: purchase,
+        payment: this.pay.toString(),
+      };
+      sale.address.district_id = sale.address.district_id.id;
+      console.log(sale);
+      this.sendPuchase(sale);
     },
     sendPuchase(sale) {
       this.$store
@@ -163,12 +154,20 @@ export default {
           noMsg: true,
         })
         .then((resp) => {
+          if (resp.data.mp_response) {
+            window.location.href = resp.data.mp_response.response.init_point;
+          }
           this.$store.commit("sale/request", [
             "cart",
             { open: false, step: 1 },
           ]);
-          this.$store.commit("sale/request", ["purchaseDetails", resp.data]);
-          this.$router.push("pedidos-detalhes/" + resp.data.id).catch(() => {});
+          this.$store.commit("sale/request", [
+            "purchaseDetails",
+            resp.data.saleReturn,
+          ]);
+          this.$router
+            .push("pedidos-detalhes/" + resp.data.saleReturn.id)
+            .catch(() => {});
           this.$store.dispatch("sale/idb", {
             state: "sale",
             method: "deleteAll",
