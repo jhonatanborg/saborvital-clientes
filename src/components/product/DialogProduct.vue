@@ -5,7 +5,6 @@
     scrollable
     :retain-focus="false"
     width="500"
-    @click:outside="close"
     :value="$store.state.product.DialogProduct"
     :fullscreen="$vuetify.breakpoint.xsOnly"
   >
@@ -156,6 +155,7 @@ export default {
   methods: {
     close() {
       this.$store.commit("product/request", ["DialogProduct", false]);
+      this.comment = null;
     },
     setSale() {
       let childs = [];
@@ -179,6 +179,7 @@ export default {
       });
       this.$store.commit("product/request", ["DialogProduct", false]);
       this.sale = null;
+      this.comment = null;
     },
   },
 };
