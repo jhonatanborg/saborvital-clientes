@@ -100,6 +100,6 @@ export default {};
   font-size: 15px;
   color: white;
   font-weight: 900;
-  background-color: #156f72;
+  background-color: #1e1e1e;
 }
 </style>
