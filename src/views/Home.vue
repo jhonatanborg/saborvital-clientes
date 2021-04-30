@@ -106,7 +106,6 @@
         "
         height="400px"
         :aspect-ratio="16 / 9"
-        gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
       >
         <v-row no-gutters dense justify="center" align="center">
           <v-col cols="auto" sm="12">
