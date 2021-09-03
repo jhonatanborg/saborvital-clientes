@@ -6,8 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "yarn && node server",
-    "postinstall": "yarn build"
+    "start": "node server",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "axios": "^0.20.0",
