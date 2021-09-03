@@ -157,7 +157,7 @@
         id="vid"
         width="100%"
         height="500px"
-        src="http://www.youtube.com/embed/ft7WphkjYdM?autoplay=1"
+        src="https://www.youtube.com/embed/ft7WphkjYdM?autoplay=1"
         frameborder="0"
         allowfullscreen
       ></iframe>
