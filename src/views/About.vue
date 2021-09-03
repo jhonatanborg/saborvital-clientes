@@ -153,7 +153,14 @@
       </v-row>
     </v-container>
     <div>
-      <video muted autoplay :src="video" width="100%"></video>
+      <iframe
+        id="vid"
+        width="100%"
+        height="500px"
+        src="http://www.youtube.com/embed/ft7WphkjYdM?autoplay=1"
+        frameborder="0"
+        allowfullscreen
+      ></iframe>
     </div>
     <Footer />
   </div>
@@ -225,6 +232,9 @@ export default {
 </script>
 
 <style>
+#vid {
+  max-width: 100%;
+}
 .title-kumbucha {
   font-family: "Yanone Kaffeesatz", sans-serif;
   font-size: 40px;
