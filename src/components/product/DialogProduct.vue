@@ -7,6 +7,7 @@
     width="500"
     :value="$store.state.product.DialogProduct"
     :fullscreen="$vuetify.breakpoint.xsOnly"
+    @click:outside="close"
   >
     <v-card v-if="productModal">
       <v-img
@@ -132,7 +133,7 @@ export default {
       itemQuantity: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       comment: null,
       complements: [],
-      sale: null,
+      sale: null
     };
   },
   computed: {
@@ -142,7 +143,7 @@ export default {
     Total() {
       let total = 0;
       if (this.complements.length > 0) {
-        this.complements.forEach((item) => {
+        this.complements.forEach(item => {
           total += item.value * parseFloat(this.quantity);
         });
       }
@@ -150,7 +151,7 @@ export default {
         parseFloat(total) +
         parseFloat(this.productModal.value) * parseFloat(this.quantity)
       );
-    },
+    }
   },
   methods: {
     close() {
@@ -160,7 +161,7 @@ export default {
     setSale() {
       let childs = [];
       if (this.complements.length > 0) {
-        this.complements.forEach((item) => {
+        this.complements.forEach(item => {
           childs.push({ complement_id: item.id });
         });
       }
@@ -170,18 +171,18 @@ export default {
         product_name: this.productModal.name,
         total: parseFloat(this.Total),
         childs: childs,
-        obs: this.comment,
+        obs: this.comment
       };
       this.$store.dispatch("sale/idb", {
         state: "sale",
         data: product,
-        method: "post",
+        method: "post"
       });
       this.$store.commit("product/request", ["DialogProduct", false]);
       this.sale = null;
       this.comment = null;
-    },
-  },
+    }
+  }
 };
 </script>
 
